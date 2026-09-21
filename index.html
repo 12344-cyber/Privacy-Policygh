@@ -2,109 +2,1888 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>سياسة الخصوصية – تطبيق إدارة التجارة المالية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>استوديو الأخبار الاحترافي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; background: #f9f9f9; color: #333; }
-h1, h2 { color: #2c3e50; }
-h1 { text-align: center; }
-section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-ul { list-style-type: decimal; margin-left: 20px; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Cairo', sans-serif; background: #0a1a2e; color: #fff; padding: 8px; min-height: 100vh; direction: rtl; overflow-x: hidden; }
+  .app { max-width: 900px; margin: auto; padding-bottom: 100px; }
+  h1 { text-align: center; color: #00FF00; font-size: 1.2rem; margin: 8px 0 12px; padding: 10px; background: #0f1f33; border-radius: 15px; border: 2px solid #00FF0040; }
+  .step { background: #0f1f33; border-radius: 18px; padding: 14px; margin-bottom: 12px; border: 2px solid #2e4a6a; }
+  .step-title { color: #00FF00; font-size: 1.05rem; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .step-title .num { background: #00FF00; color: #0a1a2e; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; flex-shrink: 0; }
+  label { display: block; font-size: 0.9rem; color: #b8d0e8; margin-bottom: 6px; font-weight: 700; }
+  input[type="file"], input[type="text"], textarea, select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #2e4a6a; background: #0a1a2a; color: #fff; font-size: 0.95rem; font-family: 'Cairo', sans-serif; outline: none; }
+  input:focus, textarea:focus { border-color: #00FF00; }
+  textarea { min-height: 70px; resize: vertical; font-size: 1rem; }
+  .size-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+  .size-buttons button { padding: 12px 4px; background: #1a2f3f; border: 2px solid #2e4a6a; color: #fff; border-radius: 10px; font-size: 0.9rem; font-family: 'Cairo'; font-weight: 700; cursor: pointer; transition: 0.2s; }
+  .size-buttons button.active { background: #00FF00; color: #0a1a2e; border-color: #00FF00; }
+  .logo-box { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .logo-box img { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #00FF00; background: #000; object-fit: cover; display: none; }
+  .logo-box img.visible { display: block; }
+  .logo-box .info { flex: 1; min-width: 140px; font-size: 0.8rem; color: #b8d0e8; }
+  .big-btn { width: 100%; padding: 16px; border: none; border-radius: 16px; font-size: 1.05rem; font-weight: 900; font-family: 'Cairo'; cursor: pointer; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+  .big-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-green { background: #00FF00; color: #0a1a2e; }
+  .btn-red { background: #ff4757; color: #fff; }
+  .btn-blue { background: #2e7d32; color: #fff; }
+  .btn-cyan { background: #00bcd4; color: #0a1a2e; }
+  .preview-wrap { position: relative; width: 100%; background: linear-gradient(135deg, #0a0f1a, #000); border-radius: 20px; border: 2px solid #2e4a6a; overflow: hidden; transition: border-color 0.3s; padding: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  .preview-wrap.recording { border-color: #ff4757; box-shadow: 0 0 24px #ff475740, 0 8px 32px rgba(0,0,0,0.5); }
+  .preview-wrap canvas { max-width: 100%; display: block; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.15); background: #000; }
+  .ref-box { background: #1a0f2e; border: 2px solid #9c27b0; border-radius: 14px; padding: 12px; margin-top: 10px; }
+  .ref-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 6px; }
+  .ref-title { color: #d8b4ff; font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
+  .ref-status { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; background: #9c27b020; color: #d8b4ff; border: 1px solid #9c27b050; }
+  .ref-status.ready { background: #00FF0020; color: #00FF00; border-color: #00FF0050; }
+  .ref-video-wrap { position: relative; background: #000; border-radius: 10px; overflow: hidden; margin-top: 8px; display: none; }
+  .ref-video-wrap.show { display: block; }
+  .ref-video-wrap video { width: 100%; display: block; border-radius: 10px; }
+  .status { padding: 14px; border-radius: 12px; text-align: center; font-size: 0.95rem; font-weight: 700; margin-top: 10px; background: #0a1a2a; border: 2px solid #2e4a6a; color: #b8d0e8; line-height: 1.7; }
+  .status.ok { color: #00FF00; border-color: #00FF0050; background: #00FF0010; }
+  .status.err { color: #ff4757; border-color: #ff475750; background: #ff475710; }
+  .status.busy { color: #ffc107; border-color: #ffc10750; background: #ffc10710; }
+  .status.paused { color: #ffc107; border-color: #ffc10780; background: #ffc10720; }
+  .hint { background: #00FF0010; border-right: 4px solid #00FF00; padding: 8px 10px; border-radius: 8px; font-size: 0.8rem; color: #b8d0e8; margin-top: 8px; line-height: 1.6; }
+  .timer { text-align: center; font-size: 1.5rem; font-weight: 900; color: #ff4757; margin-top: 6px; letter-spacing: 2px; display: none; }
+  .timer.show { display: block; }
+  .pause-timer { text-align: center; font-size: 1.1rem; font-weight: 900; color: #ffc107; margin-top: 4px; display: none; }
+  .pause-timer.show { display: block; }
+  .live-dot { display: inline-block; width: 10px; height: 10px; background: #ff4757; border-radius: 50%; margin-left: 4px; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  @media (max-width: 500px) { .btn-row { grid-template-columns: 1fr; } }
+  .top-indicators { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .indicator { flex: 1; min-width: 80px; padding: 6px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; text-align: center; background: #1a2f3f; border: 1px solid #2e4a6a; color: #5a7a9a; transition: 0.3s; }
+  .indicator.on { background: #00FF0015; border-color: #00FF0050; color: #00FF00; }
+  .indicator.ref-on { background: #9c27b015; border-color: #9c27b050; color: #d8b4ff; }
+  .indicator.paused { background: #ffc10715; border-color: #ffc10750; color: #ffc107; }
+  .indicator.prompter-on { background: #ff980015; border-color: #ff980050; color: #ff9800; }
+  .pause-options { background: #1a1a2e; border: 2px solid #ffc107; border-radius: 14px; padding: 12px; margin-top: 10px; }
+  .pause-options-title { color: #ffc107; font-weight: 900; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .switch-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2e4a6a; }
+  .switch-row:last-child { border-bottom: none; }
+  .switch-row .label-text { font-size: 0.85rem; color: #b8d0e8; flex: 1; }
+  .switch-row .label-text b { color: #fff; display: block; margin-bottom: 2px; }
+  .switch { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #2e4a6a; transition: 0.3s; border-radius: 26px; }
+  .switch .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background: white; transition: 0.3s; border-radius: 50%; }
+  .switch input:checked + .slider { background: #ffc107; }
+  .switch input:checked + .slider:before { transform: translateX(22px); }
+  .switch.orange input:checked + .slider { background: #ff9800; }
+  .segments-log { margin-top: 10px; max-height: 150px; overflow-y: auto; background: #0a1a2a; border-radius: 10px; padding: 8px; }
+  .segment-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: #1a2f3f; border-radius: 8px; margin-bottom: 4px; font-size: 0.8rem; color: #b8d0e8; }
+  .segment-item .seg-num { background: #00FF00; color: #0a1a2e; padding: 2px 8px; border-radius: 10px; font-weight: 900; font-size: 0.75rem; }
+  .volume-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 8px; background: #2e4a6a; outline: none; border: none; margin-top: 10px; padding: 0; }
+  .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; }
+  .volume-slider::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; }
+  #micVol::-webkit-slider-thumb { background: #00bcd4; box-shadow: 0 0 12px #00bcd4; }
+  #micVol::-moz-range-thumb { background: #00bcd4; box-shadow: 0 0 12px #00bcd4; }
+  #mainVol::-webkit-slider-thumb { background: #00FF00; box-shadow: 0 0 12px #00FF00; }
+  #mainVol::-moz-range-thumb { background: #00FF00; box-shadow: 0 0 12px #00FF00; }
+  #refVolSlider::-webkit-slider-thumb { background: #9c27b0; box-shadow: 0 0 12px #9c27b0; }
+  #refVolSlider::-moz-range-thumb { background: #9c27b0; box-shadow: 0 0 12px #9c27b0; }
+  #musicVol::-webkit-slider-thumb { background: #e91e63; box-shadow: 0 0 12px #e91e63; }
+  #musicVol::-moz-range-thumb { background: #e91e63; box-shadow: 0 0 12px #e91e63; }
+  /* ===== سلايدرات التلقين ===== */
+  #prompterSize::-webkit-slider-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
+  #prompterSize::-moz-range-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
+  #prompterSpeed::-webkit-slider-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
+  #prompterSpeed::-moz-range-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
+  .trimmer { background: #0a1a2a; border: 2px solid #FFD700; border-radius: 14px; padding: 16px 12px 12px; margin-top: 10px; }
+  .trimmer-title { color: #FFD700; font-weight: 900; font-size: 0.9rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .trimmer-title .trimmer-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; background: #FFD70020; color: #FFD700; border: 1px solid #FFD70050; font-weight: 700; }
+  .trim-track { position: relative; height: 60px; margin: 8px 0 16px; user-select: none; touch-action: none; }
+  .trim-rail { position: absolute; top: 22px; left: 0; right: 0; height: 16px; background: linear-gradient(180deg, #1a2f3f, #0f1f2f); border-radius: 8px; border: 1px solid #2e4a6a; overflow: hidden; }
+  .trim-selection { position: absolute; top: 22px; height: 16px; background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700); background-size: 200% 100%; animation: goldShimmer 3s linear infinite; border-radius: 4px; box-shadow: 0 0 16px rgba(255, 215, 0, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.3); pointer-events: none; z-index: 2; }
+  @keyframes goldShimmer { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+  .trim-outside { position: absolute; top: 22px; height: 16px; background: rgba(0, 0, 0, 0.7); pointer-events: none; z-index: 3; }
+  .trim-handle { position: absolute; top: 8px; width: 24px; height: 44px; border-radius: 8px; cursor: grab; z-index: 10; display: flex; align-items: center; justify-content: center; transition: transform 0.15s, box-shadow 0.15s; touch-action: none; border: 3px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
+  .trim-handle:active { cursor: grabbing; transform: scale(1.15); }
+  .trim-handle::after { content: ''; width: 3px; height: 20px; background: rgba(255,255,255,0.7); border-radius: 2px; box-shadow: 6px 0 0 rgba(255,255,255,0.7), -6px 0 0 rgba(255,255,255,0.7); }
+  .trim-handle.start { background: linear-gradient(135deg, #00FF00, #2e7d32); box-shadow: 0 4px 16px rgba(0,255,0,0.5); }
+  .trim-handle.end { background: linear-gradient(135deg, #ff4757, #c0392b); box-shadow: 0 4px 16px rgba(255,71,87,0.5); }
+  .trim-handle.start::before, .trim-handle.end::before { content: ''; position: absolute; width: 8px; height: 8px; background: #fff; border-radius: 50%; top: -12px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 8px #fff; }
+  .trim-cursor { position: absolute; top: 14px; height: 32px; width: 3px; background: #fff; box-shadow: 0 0 10px #fff, 0 0 20px rgba(255, 255, 255, 0.6); pointer-events: none; z-index: 8; border-radius: 2px; display: none; }
+  .trim-cursor::before { content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #fff; }
+  .trim-times { display: flex; justify-content: space-between; gap: 10px; margin-top: 4px; }
+  .trim-time-display { flex: 1; background: #0f1f33; border: 2px solid #2e4a6a; border-radius: 10px; padding: 8px; text-align: center; }
+  .trim-time-display.start { border-color: #00FF00; }
+  .trim-time-display.end { border-color: #ff4757; }
+  .trim-time-display.duration { border-color: #FFD700; }
+  .trim-time-label { font-size: 0.7rem; font-weight: 900; margin-bottom: 2px; opacity: 0.8; }
+  .trim-time-display.start .trim-time-label { color: #00FF00; }
+  .trim-time-display.end .trim-time-label { color: #ff4757; }
+  .trim-time-display.duration .trim-time-label { color: #FFD700; }
+  .trim-time-val { font-size: 1.05rem; color: #fff; font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: 0.5px; }
+  .trim-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .trim-btn { padding: 12px; border: none; border-radius: 10px; font-family: 'Cairo'; font-weight: 900; font-size: 0.85rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .trim-btn:active { transform: scale(0.96); }
+  .trim-btn.preview { background: linear-gradient(135deg, #00bcd4, #0097a7); color: #0a1a2e; grid-column: 1 / -1; }
+  .trim-btn.preview.playing { background: linear-gradient(135deg, #ffc107, #ff9800); }
+  .trim-btn.reset { background: #2e4a6a; color: #fff; grid-column: 1 / -1; }
+  .trim-btn.goto-start { background: linear-gradient(135deg, #00FF00, #2e7d32); color: #0a1a2e; }
+  .trim-btn.goto-end { background: linear-gradient(135deg, #ff4757, #c0392b); color: #fff; }
+  .trimmer.ref { border-color: #9c27b0; }
+  .trimmer.ref .trimmer-title { color: #d8b4ff; }
+  .trimmer.ref .trimmer-badge { background: #9c27b020; color: #d8b4ff; border-color: #9c27b050; }
+  .trimmer.ref .trim-handle.start { background: linear-gradient(135deg, #9c27b0, #6a1b9a); box-shadow: 0 4px 16px rgba(156,39,176,0.5); }
+  .trimmer.ref .trim-selection { background: linear-gradient(90deg, #9c27b0, #e91e63, #9c27b0); background-size: 200% 100%; box-shadow: 0 0 16px rgba(156,39,176,0.5), inset 0 0 8px rgba(255, 255, 255, 0.3); }
+  .trimmer.ref .trim-btn.preview { background: linear-gradient(135deg, #9c27b0, #e91e63); color: #fff; }
+  .studio-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: #000; overflow: hidden; }
+  body.studio-mode { overflow: hidden !important; padding: 0 !important; }
+  body.studio-mode .studio-overlay { display: flex; flex-direction: column; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  body.studio-mode .app { display: none !important; }
+  .studio-top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top)); display: flex; justify-content: space-between; align-items: center; z-index: 10; background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent); transition: opacity 0.4s ease; }
+  .studio-controls-hidden .studio-top-bar, .studio-controls-hidden .studio-bottom-bar { opacity: 0; pointer-events: none; }
+  .studio-timer { font-size: 1.15rem; font-weight: 900; color: #ff4757; background: rgba(0,0,0,0.7); padding: 6px 14px; border-radius: 30px; letter-spacing: 2px; font-variant-numeric: tabular-nums; border: 2px solid #ff475780; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(8px); }
+  .studio-timer.paused { color: #ffc107; border-color: #ffc10780; }
+  .studio-timer .dot { width: 10px; height: 10px; background: #ff4757; border-radius: 50%; animation: blink 1s infinite; }
+  .studio-timer.paused .dot { background: #ffc107; animation: none; }
+  .studio-live-badge { font-size: 0.8rem; font-weight: 700; padding: 6px 12px; border-radius: 30px; background: rgba(0,0,0,0.7); color: #00FF00; border: 2px solid #00FF0050; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; }
+  .studio-live-badge.paused { color: #ffc107; border-color: #ffc10780; }
+  .studio-video-area { flex: 1; min-height: 0; min-width: 0; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse at center, #0a1520 0%, #000 100%); padding: 60px 16px 100px 16px; }
+  .studio-video-area canvas { display: block; background: #000; border-radius: 12px; box-shadow: 0 12px 48px rgba(0,0,0,0.9), 0 0 0 1px rgba(255, 215, 0, 0.5); max-width: 100%; max-height: 100%; width: auto; height: auto; }
+  .studio-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px; padding-bottom: max(14px, env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); z-index: 10; transition: opacity 0.4s ease; }
+  .studio-modes-row { max-width: 720px; margin: 0 auto 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .studio-mode-btn { padding: 12px 6px; border: 2px solid #2e4a6a; background: rgba(10, 26, 46, 0.9); color: #b8d0e8; border-radius: 12px; font-family: 'Cairo'; font-weight: 900; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; backdrop-filter: blur(8px); }
+  .studio-mode-btn:active { transform: scale(0.95); }
+  .studio-mode-btn.active { background: linear-gradient(135deg, #00FF00, #00bcd4); color: #0a1a2e; border-color: #00FF00; box-shadow: 0 0 16px #00FF0050; }
+  .studio-mode-btn.active.anchor-mode { background: linear-gradient(135deg, #00FF00, #2e7d32); }
+  .studio-mode-btn.active.reference-mode { background: linear-gradient(135deg, #9c27b0, #e91e63); color: #fff; border-color: #9c27b0; }
+  .studio-mode-btn.active.split-mode { background: linear-gradient(135deg, #00bcd4, #2e7d32); }
+  .studio-mode-btn.disabled { opacity: 0.35; cursor: not-allowed; }
+  .studio-mode-btn .mode-icon { font-size: 1.3rem; line-height: 1; }
+  .studio-mode-btn .mode-label { font-size: 0.7rem; }
+  .studio-actions-row { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .studio-action-btn { padding: 16px; border: none; border-radius: 14px; font-family: 'Cairo'; font-weight: 900; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.15s; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+  .studio-action-btn:active { transform: scale(0.96); }
+  .studio-action-pause { background: #ffc107; color: #0a1a2e; }
+  .studio-action-resume { background: #00FF00; color: #0a1a2e; animation: pulse-green-btn 1.5s infinite; }
+  .studio-action-stop { background: #ff4757; color: #fff; }
+  @keyframes pulse-green-btn { 0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 0 rgba(0,255,0,0.5); } 50% { box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 12px rgba(0,255,0,0); } }
+  .studio-tap-hint { position: absolute; top: 80px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.75); color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(8px); animation: hintFade 5s forwards; pointer-events: none; z-index: 20; white-space: nowrap; }
+  @keyframes hintFade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+  .studio-mini-ref { position: absolute; top: 80px; right: 16px; background: rgba(156, 39, 176, 0.95); color: #fff; border: 2px solid #9c27b0; border-radius: 30px; padding: 10px 16px; font-family: 'Cairo'; font-weight: 900; font-size: 0.85rem; cursor: pointer; backdrop-filter: blur(8px); z-index: 15; display: none; align-items: center; gap: 6px; box-shadow: 0 4px 20px rgba(156,39,176,0.5); }
+  .studio-mini-ref.show { display: flex; }
+  .studio-mini-music { position: absolute; top: 130px; right: 16px; background: rgba(233, 30, 99, 0.95); color: #fff; border: 2px solid #e91e63; border-radius: 30px; padding: 10px 16px; font-family: 'Cairo'; font-weight: 900; font-size: 0.85rem; cursor: pointer; backdrop-filter: blur(8px); z-index: 15; display: none; align-items: center; gap: 6px; box-shadow: 0 4px 20px rgba(233,30,99,0.5); }
+  .studio-mini-music.show { display: flex; }
+  .studio-mini-music.playing { background: rgba(0,255,0,0.95); border-color: #00FF00; color: #0a1a2e; box-shadow: 0 4px 20px rgba(0,255,0,0.5); animation: pulseMusic 1.5s infinite; }
+  @keyframes pulseMusic { 0%, 100% { box-shadow: 0 4px 20px rgba(0,255,0,0.5), 0 0 0 0 rgba(0,255,0,0.6); } 50% { box-shadow: 0 4px 20px rgba(0,255,0,0.5), 0 0 0 12px rgba(0,255,0,0); } }
+
+  /* ================================================================
+     ✨ جديد: طبقة التلقين (التليبرومبتر) — تظهر للمستخدم فقط ولا تُسجَّل
+     ================================================================ */
+  .teleprompter-overlay {
+    position: absolute;
+    left: 50%;
+    bottom: 120px;
+    transform: translateX(-50%);
+    width: min(94%, 1100px);
+    height: min(42vh, 420px);
+    background: rgba(0, 0, 0, 0.78);
+    border-radius: 14px;
+    border: 2px solid rgba(255, 152, 0, 0.55);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,152,0,0.15);
+    overflow: hidden;
+    z-index: 9;
+    display: none;
+    backdrop-filter: blur(5px);
+    pointer-events: auto;
+  }
+  .teleprompter-overlay.show { display: block; }
+  .teleprompter-overlay.no-bg {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .teleprompter-overlay.mirror .teleprompter-content { transform: scaleX(-1); }
+  .teleprompter-scroll {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+  }
+  .teleprompter-scroll::-webkit-scrollbar { display: none; }
+  .teleprompter-content {
+    color: #fff;
+    font-family: 'Cairo', Tahoma, sans-serif;
+    font-weight: 700;
+    line-height: 1.7;
+    text-align: center;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-shadow: 0 2px 10px rgba(0,0,0,1), 0 0 18px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,1);
+    padding: 0 26px;
+    transition: font-size 0.15s;
+  }
+  .studio-mini-prompter {
+    position: absolute;
+    top: 180px;
+    right: 16px;
+    background: rgba(255, 152, 0, 0.95);
+    color: #0a1a2e;
+    border: 2px solid #ff9800;
+    border-radius: 30px;
+    padding: 10px 16px;
+    font-family: 'Cairo';
+    font-weight: 900;
+    font-size: 0.85rem;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    z-index: 15;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 20px rgba(255,152,0,0.5);
+  }
+  .studio-mini-prompter.show { display: flex; }
+  .studio-mini-prompter.off { background: rgba(80, 80, 80, 0.9); border-color: #666; color: #ddd; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .studio-prompter-controls {
+    position: absolute;
+    top: 232px;
+    right: 16px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 15;
+  }
+  .studio-prompter-controls.show { display: flex; }
+  .studio-prompter-controls button {
+    background: rgba(0,0,0,0.85);
+    color: #ff9800;
+    border: 2px solid #ff980066;
+    border-radius: 30px;
+    padding: 8px 14px;
+    font-family: 'Cairo';
+    font-weight: 900;
+    font-size: 0.8rem;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .studio-prompter-controls button:active { transform: scale(0.95); }
 </style>
 </head>
 <body>
+<div class="app">
+  <h1>📺 استوديو الأخبار الاحترافي</h1>
 
-<h1>🔐 سياسة الخصوصية – تطبيق إدارة التجارة المالية</h1>
+  <div class="top-indicators">
+    <div class="indicator" id="indSource">📹 المصدر</div>
+    <div class="indicator" id="indMic">🎤 الميكروفون</div>
+    <div class="indicator" id="indRef">🎞️ المرجعي</div>
+    <div class="indicator" id="indMusic">🎵 الموسيقى</div>
+    <div class="indicator" id="indPrompter">📖 التلقين</div>
+    <div class="indicator" id="indRec">🔴 التسجيل</div>
+  </div>
 
-<section>
-<h2>1️⃣ المعلومات التي نقوم بجمعها</h2>
-<ul>
-<li>عنوان البريد الإلكتروني (Email) عند التسجيل</li>
-<li>اسم المستخدم</li>
-<li>البيانات التي يدخلها المستخدم بنفسه داخل التطبيق (مثل: المعاملات، المشتريات، المبيعات، التكاليف، الأرباح)</li>
-<li>معرف المستخدم داخل النظام (User ID)</li>
-</ul>
-</section>
+  <div class="step">
+    <div class="step-title"><span class="num">1</span> مصدر البث</div>
+    <div class="size-buttons" id="sourceButtons" style="grid-template-columns: repeat(2, 1fr);">
+      <button data-src="file" class="active">📁 رفع فيديو</button>
+      <button data-src="camera">🎥 تصوير مباشر</button>
+    </div>
+    <div id="fileBox" style="margin-top:10px;">
+      <input type="file" id="videoFile" accept="video/*">
+      <div id="mainTrimmer" class="trimmer" style="display:none;">
+        <div class="trimmer-title"><span>✂️ حدد المقطع بالسحب</span><span class="trimmer-badge" id="mainTrimBadge">كامل</span></div>
+        <div class="trim-track" id="mainTrimTrack">
+          <div class="trim-rail"></div>
+          <div class="trim-selection" id="mainTrimSelection"></div>
+          <div class="trim-outside" id="mainTrimOutsideL"></div>
+          <div class="trim-outside" id="mainTrimOutsideR"></div>
+          <div class="trim-cursor" id="mainTrimCursor"></div>
+          <div class="trim-handle start" id="mainTrimHandleStart"></div>
+          <div class="trim-handle end" id="mainTrimHandleEnd"></div>
+        </div>
+        <div class="trim-times">
+          <div class="trim-time-display start"><div class="trim-time-label">🟢 البداية</div><div class="trim-time-val" id="mainTrimStartVal">00:00.0</div></div>
+          <div class="trim-time-display duration"><div class="trim-time-label">⏱️ المدة</div><div class="trim-time-val" id="mainTrimDurationVal">00:00.0</div></div>
+          <div class="trim-time-display end"><div class="trim-time-label">🔴 النهاية</div><div class="trim-time-val" id="mainTrimEndVal">00:00.0</div></div>
+        </div>
+        <div class="trim-actions">
+          <button class="trim-btn goto-start" id="mainTrimGotoStart">⏮️ ذهاب للبداية</button>
+          <button class="trim-btn goto-end" id="mainTrimGotoEnd">⏭️ ذهاب للنهاية</button>
+          <button class="trim-btn preview" id="mainTrimPreview">▶️ استمع للمقطع المحدد</button>
+          <button class="trim-btn reset" id="mainTrimReset">🔄 الفيديو كاملاً</button>
+        </div>
+        <div class="hint" style="background:#FFD70010; border-right-color:#FFD700; color:#FFD700; margin-top:8px;">💡 اسحب المقبض الأخضر لتحديد البداية والأحمر لتحديد النهاية</div>
+      </div>
+    </div>
+    <div id="cameraBox" style="display:none; margin-top:10px;">
+      <button class="big-btn btn-blue" id="btnCamOn" style="margin-top:0;">🎥 تشغيل الكاميرا</button>
+      <div class="btn-row" id="camControls" style="display:none;">
+        <button class="big-btn btn-red" id="btnCamOff">⏹️ إيقاف</button>
+        <button class="big-btn btn-cyan" id="btnSwitchCam">🔄 تبديل</button>
+      </div>
+      <div class="hint">⚠️ افتح الصفحة عبر HTTPS أو localhost</div>
+    </div>
+  </div>
 
-<section>
-<h2>2️⃣ كيفية استخدام المعلومات</h2>
-<ul>
-<li>تمكين المستخدم من إنشاء حساب وتسجيل الدخول</li>
-<li>حفظ وإدارة البيانات التجارية الخاصة بالمستخدم</li>
-<li>مزامنة البيانات بين الأجهزة عند تسجيل الدخول بنفس الحساب</li>
-<li>تحسين أداء التطبيق وتجربة الاستخدام</li>
-<li>عرض الإحصائيات والتقارير بناءً على بيانات المستخدم</li>
-</ul>
-</section>
+  <div class="step">
+    <div class="step-title"><span class="num">2</span> الشريط الإخباري</div>
+    <textarea id="newsText" placeholder="اكتب نص الشريط الإخباري..."></textarea>
+    <div class="size-buttons" id="sizeButtons" style="margin-top:8px;">
+      <button data-size="2">صغير</button>
+      <button data-size="3" class="active">وسط</button>
+      <button data-size="4">كبير</button>
+      <button data-size="5">ضخم</button>
+    </div>
+  </div>
 
-<section>
-<h2>3️⃣ تخزين وحماية البيانات</h2>
-<ul>
-<li>يتم تخزين بيانات المستخدم على خوادم Firebase (خدمة تابعة لشركة Google)</li>
-<li>يتم حفظ البيانات بطريقة منظمة ومربوطة بحساب المستخدم فقط</li>
-<li>لا نطّلع يدويًا على تفاصيل بياناتك المالية إلا في حال وجود طلب دعم تقني صريح من المستخدم</li>
-<li>نستخدم خدمات Firebase التي تطبق معايير أمان معروفة</li>
-<li>رغم ذلك، لا يمكن ضمان حماية 100% من أي اختراق إلكتروني خارج عن الإرادة</li>
-</ul>
-</section>
+  <!-- ================================================================
+       ✨ جديد: قسم التلقين (التليبرومبتر)
+       ================================================================ -->
+  <div class="step" style="border-color:#ff9800;">
+    <div class="step-title"><span class="num" style="background:#ff9800;color:#0a1a2e;">📖</span><span style="color:#ff9800;">نص التلقين (تقريرك)</span></div>
+    <div class="hint" style="background:#ff980010; border-right-color:#ff9800; color:#ff9800; line-height:1.7;">
+      💡 الصق نص تقريرك هنا — سيظهر كطبقة على شاشة المعاينة أثناء التسجيل لتقرأه براحة.<br>
+      ✅ <b>لن يظهر في الفيديو النهائي</b> (طبقة قراءة فقط فوق المعاينة).
+    </div>
+    <textarea id="prompterText" placeholder="الصق نص التقرير هنا..." style="min-height:140px; margin-top:10px; border-color:#ff9800;"></textarea>
 
-<section>
-<h2>4️⃣ مشاركة المعلومات</h2>
-<ul>
-<li>لا نقوم ببيع أو مشاركة بيانات المستخدمين مع أي طرف ثالث</li>
-<li>لا تُستخدم البيانات لأغراض إعلانية</li>
-<li>لا يتم مشاركة البيانات إلا في الحالات التالية فقط:
-  <ul>
-    <li>الامتثال لطلب قانوني رسمي (إن وُجد)</li>
-    <li>خدمات Firebase اللازمة لتشغيل التطبيق</li>
-  </ul>
-</li>
-</ul>
-</section>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+      <div>
+        <label style="display:flex; justify-content:space-between; align-items:center;"><span>📏 حجم الخط</span><span id="prompterSizeVal" style="color:#ff9800; font-weight:900;">38</span></label>
+        <input type="range" id="prompterSize" class="volume-slider" min="20" max="72" value="38" step="2">
+      </div>
+      <div>
+        <label style="display:flex; justify-content:space-between; align-items:center;"><span>⚡ سرعة التمرير</span><span id="prompterSpeedVal" style="color:#ff9800; font-weight:900;">30</span></label>
+        <input type="range" id="prompterSpeed" class="volume-slider" min="5" max="100" value="30" step="5">
+      </div>
+    </div>
 
-<section>
-<h2>5️⃣ مسؤولية المستخدم</h2>
-<p>استخدام التطبيق يتم على مسؤولية المستخدم الشخصية. التطبيق أداة تنظيم ومساعدة فقط ولا يتحمل أي مسؤولية عن:</p>
-<ul>
-<li>الخسائر التجارية أو المالية</li>
-<li>دقة البيانات المدخلة من قبل المستخدم</li>
-<li>أي قرارات تجارية مبنية على مخرجات التطبيق</li>
-</ul>
-<p>المستخدم مسؤول عن صحة البيانات والحفاظ على سرية البريد الإلكتروني وكلمة المرور.</p>
-</section>
+    <div class="switch-row" style="margin-top:10px;">
+      <div class="label-text"><b>📖 تفعيل التلقين</b>عرض النص على المعاينة أثناء التسجيل</div>
+      <label class="switch orange"><input type="checkbox" id="optPrompter" checked><span class="slider"></span></label>
+    </div>
+    <div class="switch-row">
+      <div class="label-text"><b>↔️ وضع المرآة</b>عكس النص أفقياً لأجهزة التلقين المادية</div>
+      <label class="switch orange"><input type="checkbox" id="optPrompterMirror"><span class="slider"></span></label>
+    </div>
+    <div class="switch-row">
+      <div class="label-text"><b>🎨 خلفية داكنة</b>خلفية معتمة لتحسين القراءة فوق أي صورة</div>
+      <label class="switch orange"><input type="checkbox" id="optPrompterBg" checked><span class="slider"></span></label>
+    </div>
+  </div>
 
-<section>
-<h2>6️⃣ البيانات المالية</h2>
-<ul>
-<li>بياناتك المالية ملك لك وحدك</li>
-<li>يتم تخزينها على خوادم Firebase ومربوطة بحسابك فقط</li>
-<li>لا يتم استخدامها لأي غرض خارج نطاق التطبيق</li>
-<li>يمكنك حذف بياناتك أو حسابك في أي وقت</li>
-<li>ننصح بالاحتفاظ بنسخ احتياطية عند توفر هذه الميزة</li>
-</ul>
-</section>
+  <div class="step">
+    <div class="step-title"><span class="num">3</span> الشعار (اختياري)</div>
+    <div class="logo-box">
+      <img id="logoPreview" src="" alt="الشعار">
+      <div class="info"><b style="color:#00FF00;">لم يتم اختيار شعار</b><br><span style="font-size:0.75rem;">اختر صورة شعارك 👇</span></div>
+    </div>
+    <input type="file" id="logoFile" accept="image/*" style="margin-top:8px;">
+  </div>
 
-<section>
-<h2>7️⃣ الموافقة</h2>
-<p>باستخدامك لهذا التطبيق، فإنك توافق على: تخزين بياناتك على خوادم Firebase واستخدام بياناتك فقط لتشغيل وتحسين التطبيق.</p>
-</section>
+  <div class="step" style="border-color:#9c27b0;">
+    <div class="step-title"><span class="num" style="background:#9c27b0;color:#fff;">4</span> <span style="color:#d8b4ff;">الفيديو المرجعي</span></div>
+    <div class="hint" style="background:#9c27b010; border-right-color:#9c27b0; color:#d8b4ff;">💡 سيظهر بأسلوب القنوات الإخبارية مع ظهورك في زاوية صغيرة.</div>
+    <input type="file" id="refFile" accept="video/*" style="margin-top:10px;">
+    <div class="ref-box" id="refBox" style="display:none;">
+      <div class="ref-header">
+        <div class="ref-title">🎞️ الفيديو المرجعي</div>
+        <div class="ref-status" id="refStatus">غير محمّل</div>
+      </div>
+      <div class="ref-video-wrap" id="refVideoWrap"><video id="refVideo" playsinline webkit-playsinline preload="metadata" controls style="width:100%; display:block; border-radius:10px; background:#000;"></video></div>
+      <div id="refTrimmer" class="trimmer ref" style="margin-top:12px;">
+        <div class="trimmer-title"><span>✂️ حدد مقطع المرجعي</span><span class="trimmer-badge" id="refTrimBadge">كامل</span></div>
+        <div class="trim-track" id="refTrimTrack">
+          <div class="trim-rail"></div>
+          <div class="trim-selection" id="refTrimSelection"></div>
+          <div class="trim-outside" id="refTrimOutsideL"></div>
+          <div class="trim-outside" id="refTrimOutsideR"></div>
+          <div class="trim-cursor" id="refTrimCursor"></div>
+          <div class="trim-handle start" id="refTrimHandleStart"></div>
+          <div class="trim-handle end" id="refTrimHandleEnd"></div>
+        </div>
+        <div class="trim-times">
+          <div class="trim-time-display start"><div class="trim-time-label">🟣 البداية</div><div class="trim-time-val" id="refTrimStartVal">00:00.0</div></div>
+          <div class="trim-time-display duration"><div class="trim-time-label">⏱️ المدة</div><div class="trim-time-val" id="refTrimDurationVal">00:00.0</div></div>
+          <div class="trim-time-display end"><div class="trim-time-label">🔴 النهاية</div><div class="trim-time-val" id="refTrimEndVal">00:00.0</div></div>
+        </div>
+        <div class="trim-actions">
+          <button class="trim-btn goto-start" id="refTrimGotoStart">⏮️ ذهاب للبداية</button>
+          <button class="trim-btn goto-end" id="refTrimGotoEnd">⏭️ ذهاب للنهاية</button>
+          <button class="trim-btn preview" id="refTrimPreview">▶️ استمع للمقطع المحدد</button>
+          <button class="trim-btn reset" id="refTrimReset">🔄 المرجعي كاملاً</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<section>
-<h2>8️⃣ التعديلات على سياسة الخصوصية</h2>
-<p>نحتفظ بالحق في تعديل سياسة الخصوصية في أي وقت، وسيتم إشعار المستخدم أو نشر التحديث داخل التطبيق.</p>
-</section>
+  <div class="step" style="border-color:#00bcd4;">
+    <div class="step-title"><span class="num" style="background:#00bcd4;color:#0a1a2e;">🎤</span><span style="color:#00bcd4;">مستوى الميكروفون</span></div>
+    <label style="display:flex; justify-content:space-between; align-items:center;"><span>🔊 قوة صوتك</span><span id="micVolVal" style="color:#00bcd4; font-weight:900; font-size:1.1rem;">250%</span></label>
+    <input type="range" id="micVol" class="volume-slider" min="100" max="500" value="250" step="10">
+  </div>
 
-<section>
-<h2>9️⃣ التواصل والدعم</h2>
-<p>للاستفسار أو الدعم التقني:</p>
-<ul>
-<li>📧 البريد الإلكتروني: ajeajmar66@gmail.com</li>
-<li>📱 واتساب: 0022226361821</li>
-<li>📞 الهاتف: 0022243162663</li>
-<li>ساعات الدعم: الأحد – الخميس، 9 صباحاً – 5 مساءً</li>
-<li>⏱️ وقت الاستجابة: 24 – 48 ساعة</li>
-</ul>
-<p>ملاحظة: التطبيق أداة لإدارة وتنظيم التجارة فقط، ولا يقدم أي استشارات مالية أو استثمارية. ننصح باستشارة مختص قبل اتخاذ قرارات تجارية مهمة.</p>
-</section>
+  <div class="step" style="border-color:#e91e63;">
+    <div class="step-title"><span class="num" style="background:#e91e63;color:#fff;">🎵</span><span style="color:#ff80ab;">الموسيقى الخلفية</span></div>
+    <div class="hint" style="background:#e91e6310; border-right-color:#e91e63; color:#ff80ab;">💡 ارفع ملف موسيقى — ستُدمج مع صوتك تلقائياً أثناء التسجيل. اضغط الزر أسفل الشاشة أثناء التسجيل لتشغيلها.</div>
+    <input type="file" id="musicFile" accept="audio/*" style="margin-top:10px;">
+    <label style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;"><span>🎚️ مستوى الموسيقى</span><span id="musicVolVal" style="color:#ff80ab; font-weight:900; font-size:1.1rem;">70%</span></label>
+    <input type="range" id="musicVol" class="volume-slider" min="0" max="200" value="70" step="5">
+    <div id="musicInfo" class="hint" style="display:none; background:#e91e6310; border-right-color:#e91e63; color:#ff80ab; margin-top:10px;"></div>
+  </div>
 
+  <div class="step" style="border-color:#00FF00;">
+    <div class="step-title"><span class="num" style="background:#00FF00;color:#0a1a2e;">🔊</span><span style="color:#00FF00;">مستويات أصوات الفيديو</span></div>
+    <label style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;"><span>📁 صوت الفيديو الرئيسي</span><span id="mainVolVal" style="color:#00FF00; font-weight:900; font-size:1.1rem;">100%</span></label>
+    <input type="range" id="mainVol" class="volume-slider" min="0" max="200" value="100" step="5">
+    <label style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;"><span>🎞️ صوت الفيديو المرجعي</span><span id="refVolVal" style="color:#9c27b0; font-weight:900; font-size:1.1rem;">100%</span></label>
+    <input type="range" id="refVolSlider" class="volume-slider" min="0" max="200" value="100" step="5">
+  </div>
+
+  <div class="step" style="border-color:#00FF00;">
+    <div class="step-title"><span class="num">5</span> <span>الإعدادات الذكية</span></div>
+    <div class="pause-options" style="border-color:#00FF00;">
+      <div class="pause-options-title" style="color:#00FF00;">⚙️ إعدادات احترافية</div>
+      <div class="switch-row"><div class="label-text"><b>🎤 خفض صوتي تلقائياً</b>صوتك ينخفض عندما يتكلم المرجعي</div><label class="switch"><input type="checkbox" id="optAudioDuck" checked><span class="slider"></span></label></div>
+      <div class="switch-row"><div class="label-text"><b>📺 عرض PiP عند المرجعي</b>ظهورك في زاوية صغيرة عند عرض المرجعي</div><label class="switch"><input type="checkbox" id="optShowPiP" checked><span class="slider"></span></label></div>
+      <div class="switch-row"><div class="label-text"><b>🔁 تكرار المقطع المحدد</b>إعادة المقطع تلقائياً عند انتهائه</div><label class="switch"><input type="checkbox" id="optLoopClip" checked><span class="slider"></span></label></div>
+      <div class="switch-row"><div class="label-text"><b>🎬 شاشة انتقالية عند الإيقاف</b>عرض انتقال بين المواقع</div><label class="switch"><input type="checkbox" id="optShowTransition" checked><span class="slider"></span></label></div>
+    </div>
+    <div class="hint" style="background:#ffc10710; border-right-color:#ffc107; color:#ffc107; margin-top:10px;">📋 <b>سجل المقاطع</b></div>
+    <div class="segments-log" id="segmentsLog"><div style="text-align:center; color:#5a7a9a; padding:10px; font-size:0.8rem;">لم يبدأ التسجيل بعد...</div></div>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="num">6</span> التسجيل</div>
+    <button class="big-btn btn-green" id="btnStart" disabled>▶️ ابدأ التسجيل الاحترافي</button>
+    <button class="big-btn btn-red" id="btnStop" disabled style="display:none;">⏹️ إنهاء التسجيل</button>
+    <div class="timer" id="timer">00:00</div>
+    <div class="pause-timer" id="pauseTimer">⏸️ إيقاف مؤقت: <span id="pauseTimerValue">00:00</span></div>
+    <div class="status" id="status">👆 اختر مصدر البث أولاً</div>
+    <button class="big-btn btn-blue" id="btnDownload" style="display:none;">⬇️ تحميل الفيديو</button>
+  </div>
+</div>
+
+<div class="studio-overlay" id="studioOverlay">
+  <div class="studio-top-bar">
+    <div class="studio-timer" id="studioTimer"><span class="dot"></span><span id="studioTimerText">00:00</span></div>
+    <div class="studio-live-badge" id="studioLiveBadge">🔴 بث مباشر</div>
+  </div>
+  <div class="studio-tap-hint" id="studioTapHint">💡 المس الشاشة لإظهار/إخفاء الأزرار</div>
+  <button class="studio-mini-ref" id="studioMiniRef">🎞️ عرض المرجعي</button>
+  <button class="studio-mini-music" id="studioMiniMusic">🎵 تشغيل الموسيقى</button>
+  <button class="studio-mini-prompter" id="studioMiniPrompter">📖 إخفاء التلقين</button>
+  <div class="studio-prompter-controls" id="studioPrompterControls">
+    <button id="studioPrompterRestart">⏮️ إعادة من البداية</button>
+    <button id="studioPrompterSlower">🐢 أبطأ</button>
+    <button id="studioPrompterFaster">🐇 أسرع</button>
+  </div>
+  <div class="studio-video-area" id="studioVideoArea"></div>
+  <div class="studio-bottom-bar">
+    <div class="studio-modes-row">
+      <button class="studio-mode-btn active anchor-mode" id="modeAnchor"><span class="mode-icon">👤</span><span class="mode-label">المذيع</span></button>
+      <button class="studio-mode-btn reference-mode disabled" id="modeRef"><span class="mode-icon">🎞️</span><span class="mode-label">المرجعي + أنت</span></button>
+      <button class="studio-mode-btn split-mode disabled" id="modeSplit"><span class="mode-icon">⚖️</span><span class="mode-label">مقسوم</span></button>
+    </div>
+    <div class="studio-actions-row">
+      <button class="studio-action-btn studio-action-pause" id="studioPauseBtn">⏸️ إيقاف مؤقت</button>
+      <button class="studio-action-btn studio-action-resume" id="studioResumeBtn" style="display:none;">▶️ استئناف</button>
+      <button class="studio-action-btn studio-action-stop" id="studioStopBtn">⏹️ إنهاء</button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ✨ جديد: طبقة التلقين (فوق المعاينة، خارج الكانفس = لا تُسجَّل)
+       ================================================================ -->
+  <div class="teleprompter-overlay" id="teleprompterOverlay">
+    <div class="teleprompter-scroll" id="teleprompterScroll">
+      <div class="teleprompter-content" id="teleprompterContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  استوديو الأخبار الاحترافي - النسخة النهائية + التلقين
+// ============================================================
+
+const canvas = document.createElement('canvas');
+canvas.width = 1280;
+canvas.height = 720;
+const ctx = canvas.getContext('2d');
+
+let videoLoaded = false, cameraReady = false, refLoaded = false;
+let logoImg = null;
+let activeSource = 'file';
+let currentFacing = 'user';
+let newsSize = 3;
+let isRecording = false, isPaused = false;
+let mediaRecorder = null, recordedChunks = [];
+let canvasStream = null, cameraStream = null;
+let animFrame = null, outputBlob = null, outputExt = 'mp4', pickMime = '';
+let timerInterval = null, pauseTimerInterval = null;
+let recordStartTime = 0, pauseStartTime = 0, accumulatedPauseTime = 0;
+let lastFrameTime = 0;
+let segments = [], currentSegmentStart = 0;
+
+let layoutMode = 'anchor';
+let targetLayoutMode = 'anchor';
+let transitionProgress = 0;
+let pipX = 0.82, pipY = 0.20;
+let pipSize = 0.28;
+let optAudioDuck = true;
+let optShowPiP = true;
+let optShowTransition = true;
+let optLoopClip = true;
+
+let micBoostValue = 2.5;
+let mainVolValue = 1.0;
+let refVolValue = 1.0;
+let musicVolValue = 0.7;
+let micBoostNode = null;
+let micCompressor = null;
+let mainVolNode = null;
+let refVolNode = null;
+let musicGainNode = null;
+let musicSrcNode = null;
+
+let musicLoaded = false;
+let musicPlaying = false;
+
+let tickerX = 0;
+let tickerInited = false;
+
+let mainTrimStart = 0, mainTrimEnd = 0;
+let refTrimStart = 0, refTrimEnd = 0;
+let mainPreviewing = false, refPreviewing = false;
+let isDraggingHandle = null;
+
+// ============================================================
+// ✨ حالة التلقين (التليبرومبتر)
+// ============================================================
+let prompterEnabled = true;
+let prompterSizeValue = 38;
+let prompterSpeedValue = 30;
+let prompterMirror = false;
+let prompterBg = true;
+let prompterVisible = true;
+let prompterAutoScroll = true;
+let prompterLastTs = 0;
+let prompterInitialized = false;
+
+const video = document.createElement('video');
+video.playsInline = true; video.muted = false; video.volume = 1; video.preload = 'auto';
+video.setAttribute('playsinline', '');
+
+const camVideo = document.createElement('video');
+camVideo.playsInline = true; camVideo.muted = true;
+camVideo.setAttribute('playsinline', '');
+
+const refVideo = document.getElementById('refVideo');
+refVideo.playsInline = true; refVideo.muted = false; refVideo.volume = 1; refVideo.preload = 'auto';
+refVideo.setAttribute('playsinline', '');
+
+const musicEl = document.createElement('audio');
+musicEl.loop = true;
+musicEl.preload = 'auto';
+musicEl.crossOrigin = 'anonymous';
+
+camVideo.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:2px;height:2px;opacity:0.01;pointer-events:none;';
+document.body.appendChild(camVideo);
+
+const $ = id => document.getElementById(id);
+const newsText = $('newsText');
+const logoPreview = $('logoPreview');
+const statusEl = $('status');
+
+const studioOverlay = $('studioOverlay');
+const studioTimer = $('studioTimer');
+const studioTimerText = $('studioTimerText');
+const studioLiveBadge = $('studioLiveBadge');
+const studioVideoArea = $('studioVideoArea');
+const studioMiniRef = $('studioMiniRef');
+const studioMiniMusic = $('studioMiniMusic');
+const studioTapHint = $('studioTapHint');
+const modeAnchor = $('modeAnchor');
+const modeRef = $('modeRef');
+const modeSplit = $('modeSplit');
+const studioPauseBtn = $('studioPauseBtn');
+const studioResumeBtn = $('studioResumeBtn');
+const studioStopBtn = $('studioStopBtn');
+
+// ✨ عناصر التلقين
+const prompterOverlay = $('teleprompterOverlay');
+const prompterScroll = $('teleprompterScroll');
+const prompterContent = $('teleprompterContent');
+const studioMiniPrompter = $('studioMiniPrompter');
+const studioPrompterControls = $('studioPrompterControls');
+const prompterText = $('prompterText');
+
+let studioControlsHideTimer = null;
+let studioControlsHidden = false;
+
+window.addEventListener('DOMContentLoaded', () => {
+  const wrap = $('previewWrap');
+  if (wrap && !wrap.querySelector('canvas')) {
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto';
+    wrap.appendChild(canvas);
+  }
+});
+
+function setStatus(type, msg) {
+  statusEl.className = 'status ' + (type || '');
+  statusEl.innerHTML = msg;
+}
+function fmtTime(s) {
+  if (!isFinite(s) || s < 0) return '00:00';
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+}
+function fmtPrecise(s) {
+  if (!isFinite(s) || s < 0) return '00:00.0';
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  const dec = Math.floor((s % 1) * 10);
+  return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0') + '.' + dec;
+}
+
+// ============================================================
+// ✨ دوال التلقين
+// ============================================================
+function updatePrompterContent() {
+  const txt = prompterText.value.trim();
+  prompterContent.textContent = txt || '';
+}
+function updatePrompterStyle() {
+  prompterContent.style.fontSize = prompterSizeValue + 'px';
+}
+function updatePrompterPadding() {
+  const h = prompterScroll.clientHeight;
+  if (h <= 0) return;
+  // مسافة علوية تسمح للنص بالظهور من أسفل، وسفلية تسمح له بالمرور لأعلى
+  prompterContent.style.paddingTop = Math.floor(h * 0.55) + 'px';
+  prompterContent.style.paddingBottom = Math.floor(h * 1.0) + 'px';
+}
+function updatePrompterVisibility() {
+  const hasText = prompterText.value.trim().length > 0;
+  const shouldShow = isRecording && !isPaused && prompterEnabled && prompterVisible && hasText;
+  prompterOverlay.classList.toggle('show', shouldShow);
+  prompterOverlay.classList.toggle('no-bg', !prompterBg);
+  prompterOverlay.classList.toggle('mirror', prompterMirror);
+  if (shouldShow) {
+    updatePrompterContent();
+    updatePrompterStyle();
+    requestAnimationFrame(updatePrompterPadding);
+  }
+  // زر الإظهار/الإخفاء
+  if (isRecording && prompterEnabled && hasText) {
+    studioMiniPrompter.classList.add('show');
+    studioMiniPrompter.classList.toggle('off', !prompterVisible);
+    studioMiniPrompter.textContent = prompterVisible ? '📖 إخفاء التلقين' : '📖 إظهار التلقين';
+    studioPrompterControls.classList.toggle('show', prompterVisible);
+  } else {
+    studioMiniPrompter.classList.remove('show');
+    studioPrompterControls.classList.remove('show');
+  }
+}
+function resetPrompterScroll() {
+  prompterScroll.scrollTop = 0;
+  prompterAutoScroll = true;
+  prompterLastTs = 0;
+  // تهيئة الترتيب بعد ظهور الطبقة
+  requestAnimationFrame(() => {
+    updatePrompterPadding();
+    prompterScroll.scrollTop = 0;
+  });
+}
+function animatePrompter(ts) {
+  if (!isRecording || isPaused) return;
+  if (!prompterOverlay.classList.contains('show')) return;
+  if (!prompterAutoScroll) { prompterLastTs = ts; return; }
+  if (!prompterLastTs) { prompterLastTs = ts; return; }
+  const dt = Math.min(0.1, (ts - prompterLastTs) / 1000);
+  prompterLastTs = ts;
+  const speed = prompterSpeedValue * 2; // px/sec
+  prompterScroll.scrollTop += speed * dt;
+  const maxScroll = prompterScroll.scrollHeight - prompterScroll.clientHeight;
+  if (prompterScroll.scrollTop >= maxScroll - 1) {
+    prompterScroll.scrollTop = maxScroll;
+    prompterAutoScroll = false;
+  }
+}
+
+// مستمعات التلقين
+prompterText.addEventListener('input', () => {
+  updatePrompterContent();
+  updateIndicators();
+  if (prompterOverlay.classList.contains('show')) {
+    requestAnimationFrame(updatePrompterPadding);
+  }
+});
+$('prompterSize').addEventListener('input', e => {
+  prompterSizeValue = parseInt(e.target.value);
+  $('prompterSizeVal').textContent = prompterSizeValue;
+  updatePrompterStyle();
+  if (prompterOverlay.classList.contains('show')) requestAnimationFrame(updatePrompterPadding);
+});
+$('prompterSpeed').addEventListener('input', e => {
+  prompterSpeedValue = parseInt(e.target.value);
+  $('prompterSpeedVal').textContent = prompterSpeedValue;
+});
+$('optPrompter').addEventListener('change', e => {
+  prompterEnabled = e.target.checked;
+  updateIndicators();
+  updatePrompterVisibility();
+});
+$('optPrompterMirror').addEventListener('change', e => {
+  prompterMirror = e.target.checked;
+  prompterOverlay.classList.toggle('mirror', prompterMirror);
+});
+$('optPrompterBg').addEventListener('change', e => {
+  prompterBg = e.target.checked;
+  prompterOverlay.classList.toggle('no-bg', !prompterBg);
+});
+
+studioMiniPrompter.addEventListener('click', e => {
+  e.stopPropagation();
+  prompterVisible = !prompterVisible;
+  updatePrompterVisibility();
+  scheduleStudioHide();
+});
+$('studioPrompterRestart').addEventListener('click', e => {
+  e.stopPropagation();
+  resetPrompterScroll();
+  scheduleStudioHide();
+});
+$('studioPrompterSlower').addEventListener('click', e => {
+  e.stopPropagation();
+  prompterSpeedValue = Math.max(5, prompterSpeedValue - 5);
+  $('prompterSpeed').value = prompterSpeedValue;
+  $('prompterSpeedVal').textContent = prompterSpeedValue;
+  prompterAutoScroll = true;
+  scheduleStudioHide();
+});
+$('studioPrompterFaster').addEventListener('click', e => {
+  e.stopPropagation();
+  prompterSpeedValue = Math.min(100, prompterSpeedValue + 5);
+  $('prompterSpeed').value = prompterSpeedValue;
+  $('prompterSpeedVal').textContent = prompterSpeedValue;
+  prompterAutoScroll = true;
+  scheduleStudioHide();
+});
+
+// تمرير يدوي يوقف التمرير التلقائي مؤقتاً
+prompterScroll.addEventListener('wheel', () => { prompterAutoScroll = false; }, { passive: true });
+prompterScroll.addEventListener('touchstart', () => { prompterAutoScroll = false; }, { passive: true });
+prompterScroll.addEventListener('mousedown', () => { prompterAutoScroll = false; });
+
+window.addEventListener('resize', () => {
+  if (prompterOverlay.classList.contains('show')) requestAnimationFrame(updatePrompterPadding);
+});
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    if (prompterOverlay.classList.contains('show')) updatePrompterPadding();
+  }, 350);
+});
+
+// ============================================================
+// نظام المقص
+// ============================================================
+function setupTrimmer(config) {
+  const { trackId, selectionId, outsideLId, outsideRId, cursorId, handleStartId, handleEndId, startValId, endValId, durationValId, badgeId, getDuration, getStart, getEnd, setStart, setEnd } = config;
+  const track = $(trackId);
+  const selection = $(selectionId);
+  const outsideL = $(outsideLId);
+  const outsideR = $(outsideRId);
+  const handleStart = $(handleStartId);
+  const handleEnd = $(handleEndId);
+  const startVal = $(startValId);
+  const endVal = $(endValId);
+  const durationVal = $(durationValId);
+  const badge = $(badgeId);
+
+  function render() {
+    const dur = getDuration();
+    if (!dur) return;
+    const s = getStart(), e = getEnd();
+    const startPct = (s / dur) * 100;
+    const endPct = (e / dur) * 100;
+    handleStart.style.right = `calc(${startPct}% - 12px)`;
+    handleEnd.style.right = `calc(${endPct}% - 12px)`;
+    selection.style.right = `${startPct}%`;
+    selection.style.left = `${100 - endPct}%`;
+    outsideL.style.right = '0';
+    outsideL.style.left = `${100 - startPct}%`;
+    outsideR.style.right = `${endPct}%`;
+    outsideR.style.left = '0';
+    startVal.textContent = fmtPrecise(s);
+    endVal.textContent = fmtPrecise(e);
+    durationVal.textContent = fmtPrecise(e - s);
+    const isFull = s < 0.1 && e > dur - 0.1;
+    if (isFull) badge.textContent = 'كامل';
+    else badge.textContent = Math.round(((e - s) / dur) * 100) + '%';
+  }
+
+  function getPosFromEvent(e) {
+    const rect = track.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const fromRight = rect.right - clientX;
+    const pct = Math.max(0, Math.min(1, fromRight / rect.width));
+    return pct * getDuration();
+  }
+
+  function onPointerDown(handle, e) {
+    e.preventDefault();
+    e.stopPropagation();
+    isDraggingHandle = handle;
+  }
+
+  handleStart.addEventListener('mousedown', (e) => onPointerDown('start', e));
+  handleStart.addEventListener('touchstart', (e) => onPointerDown('start', e), { passive: false });
+  handleEnd.addEventListener('mousedown', (e) => onPointerDown('end', e));
+  handleEnd.addEventListener('touchstart', (e) => onPointerDown('end', e), { passive: false });
+
+  function onPointerMove(e) {
+    if (!isDraggingHandle) return;
+    const dur = getDuration();
+    if (!dur) return;
+    const pos = getPosFromEvent(e);
+    if (isDraggingHandle === 'start') setStart(Math.max(0, Math.min(pos, getEnd() - 0.5)));
+    else if (isDraggingHandle === 'end') setEnd(Math.min(dur, Math.max(pos, getStart() + 0.5)));
+    render();
+  }
+
+  function onPointerUp() { isDraggingHandle = null; }
+  document.addEventListener('mousemove', onPointerMove);
+  document.addEventListener('touchmove', onPointerMove, { passive: false });
+  document.addEventListener('mouseup', onPointerUp);
+  document.addEventListener('touchend', onPointerUp);
+
+  track.addEventListener('click', (e) => {
+    if (isDraggingHandle) return;
+    const t = getPosFromEvent(e);
+    config.onSeek && config.onSeek(t);
+  });
+
+  window.addEventListener('resize', render);
+  setTimeout(render, 100);
+  return { render };
+}
+
+let mainTrimmer = null;
+let refTrimmer = null;
+
+function initMainTrimmer() {
+  mainTrimmer = setupTrimmer({
+    trackId: 'mainTrimTrack', selectionId: 'mainTrimSelection', outsideLId: 'mainTrimOutsideL', outsideRId: 'mainTrimOutsideR',
+    cursorId: 'mainTrimCursor', handleStartId: 'mainTrimHandleStart', handleEndId: 'mainTrimHandleEnd',
+    startValId: 'mainTrimStartVal', endValId: 'mainTrimEndVal', durationValId: 'mainTrimDurationVal', badgeId: 'mainTrimBadge',
+    getDuration: () => videoLoaded ? video.duration : 0,
+    getStart: () => mainTrimStart, getEnd: () => mainTrimEnd,
+    setStart: (v) => { mainTrimStart = v; }, setEnd: (v) => { mainTrimEnd = v; },
+    onSeek: (t) => { video.currentTime = t; }
+  });
+}
+
+function initRefTrimmer() {
+  refTrimmer = setupTrimmer({
+    trackId: 'refTrimTrack', selectionId: 'refTrimSelection', outsideLId: 'refTrimOutsideL', outsideRId: 'refTrimOutsideR',
+    cursorId: 'refTrimCursor', handleStartId: 'refTrimHandleStart', handleEndId: 'refTrimHandleEnd',
+    startValId: 'refTrimStartVal', endValId: 'refTrimEndVal', durationValId: 'refTrimDurationVal', badgeId: 'refTrimBadge',
+    getDuration: () => refLoaded ? refVideo.duration : 0,
+    getStart: () => refTrimStart, getEnd: () => refTrimEnd,
+    setStart: (v) => { refTrimStart = v; }, setEnd: (v) => { refTrimEnd = v; },
+    onSeek: (t) => { refVideo.currentTime = t; }
+  });
+}
+
+$('mainTrimGotoStart').addEventListener('click', () => { video.currentTime = mainTrimStart; });
+$('mainTrimGotoEnd').addEventListener('click', () => { video.currentTime = mainTrimEnd; });
+$('mainTrimReset').addEventListener('click', () => {
+  mainTrimStart = 0; mainTrimEnd = video.duration;
+  if (mainTrimmer) mainTrimmer.render();
+  setStatus('ok', '✅ الفيديو الرئيسي كاملاً');
+});
+$('mainTrimPreview').addEventListener('click', () => {
+  if (!videoLoaded) return;
+  if (mainPreviewing) {
+    video.pause(); mainPreviewing = false; applyMix();
+    $('mainTrimPreview').textContent = '▶️ استمع للمقطع المحدد';
+    $('mainTrimPreview').classList.remove('playing');
+    return;
+  }
+  resumeAudio(); connectMain(); mainPreviewing = true; applyMix();
+  video.currentTime = mainTrimStart;
+  video.play().catch(()=>{});
+  $('mainTrimPreview').textContent = '⏹️ إيقاف المعاينة';
+  $('mainTrimPreview').classList.add('playing');
+  setStatus('ok', '🎧 استمع للمقطع: ' + fmtPrecise(mainTrimStart) + ' ← ' + fmtPrecise(mainTrimEnd));
+});
+
+$('refTrimGotoStart').addEventListener('click', () => { refVideo.currentTime = refTrimStart; });
+$('refTrimGotoEnd').addEventListener('click', () => { refVideo.currentTime = refTrimEnd; });
+$('refTrimReset').addEventListener('click', () => {
+  refTrimStart = 0; refTrimEnd = refVideo.duration;
+  if (refTrimmer) refTrimmer.render();
+  setStatus('ok', '✅ الفيديو المرجعي كاملاً');
+});
+$('refTrimPreview').addEventListener('click', () => {
+  if (!refLoaded) return;
+  if (refPreviewing) {
+    refVideo.pause(); refPreviewing = false; applyMix();
+    $('refTrimPreview').textContent = '▶️ استمع للمقطع المحدد';
+    $('refTrimPreview').classList.remove('playing');
+    return;
+  }
+  resumeAudio(); connectRef(); refPreviewing = true; applyMix();
+  refVideo.currentTime = refTrimStart;
+  refVideo.play().catch(()=>{});
+  $('refTrimPreview').textContent = '⏹️ إيقاف المعاينة';
+  $('refTrimPreview').classList.add('playing');
+  setStatus('ok', '🎧 استمع للمقطع: ' + fmtPrecise(refTrimStart) + ' ← ' + fmtPrecise(refTrimEnd));
+});
+
+video.addEventListener('timeupdate', () => {
+  if (video.duration && videoLoaded) {
+    const pct = (video.currentTime / video.duration) * 100;
+    $('mainTrimCursor').style.right = pct + '%';
+    $('mainTrimCursor').style.display = 'block';
+  }
+  if ((mainPreviewing || (isRecording && !isPaused)) && mainTrimEnd < video.duration - 0.2) {
+    if (video.currentTime >= mainTrimEnd - 0.05) {
+      if (mainPreviewing) {
+        video.pause(); mainPreviewing = false; applyMix();
+        $('mainTrimPreview').textContent = '▶️ استمع للمقطع المحدد';
+        $('mainTrimPreview').classList.remove('playing');
+        setStatus('ok', '✅ انتهت المعاينة');
+      } else if (isRecording && optLoopClip) video.currentTime = mainTrimStart;
+      else if (isRecording) video.pause();
+    }
+  }
+});
+
+refVideo.addEventListener('timeupdate', () => {
+  if (refVideo.duration && refLoaded) {
+    const pct = (refVideo.currentTime / refVideo.duration) * 100;
+    $('refTrimCursor').style.right = pct + '%';
+    $('refTrimCursor').style.display = 'block';
+  }
+  if ((refPreviewing || (isRecording && !isPaused && layoutMode !== 'anchor')) && refTrimEnd < refVideo.duration - 0.2) {
+    if (refVideo.currentTime >= refTrimEnd - 0.05) {
+      if (refPreviewing) {
+        refVideo.pause(); refPreviewing = false; applyMix();
+        $('refTrimPreview').textContent = '▶️ استمع للمقطع المحدد';
+        $('refTrimPreview').classList.remove('playing');
+        setStatus('ok', '✅ انتهت معاينة المرجعي');
+      } else if (isRecording && optLoopClip) refVideo.currentTime = refTrimStart;
+      else if (isRecording) refVideo.pause();
+    }
+  }
+});
+
+// نظام الصوت
+let audioCtx = null, audioDest = null;
+let srcMain = null, srcRef = null, micNode = null;
+let gainMain, gainMic, gainRef, refLimiter, musicLimiter;
+
+function ensureAudio() {
+  if (audioCtx) return audioCtx;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return null;
+  try {
+    audioCtx = new AC();
+    audioDest = audioCtx.createMediaStreamDestination();
+    gainMain = audioCtx.createGain();
+    gainMic = audioCtx.createGain();
+    gainRef = audioCtx.createGain();
+    musicGainNode = audioCtx.createGain();
+    musicGainNode.gain.value = 0;
+    micBoostNode = audioCtx.createGain();
+    micBoostNode.gain.value = micBoostValue;
+    micCompressor = audioCtx.createDynamicsCompressor();
+    micCompressor.threshold.value = -6; micCompressor.knee.value = 3;
+    micCompressor.ratio.value = 6; micCompressor.attack.value = 0.003;
+    micCompressor.release.value = 0.25;
+    mainVolNode = audioCtx.createGain();
+    mainVolNode.gain.value = mainVolValue;
+    refVolNode = audioCtx.createGain();
+    refVolNode.gain.value = refVolValue;
+    gainMain.gain.value = 1; gainMic.gain.value = 1; gainRef.gain.value = 1;
+    refLimiter = audioCtx.createDynamicsCompressor();
+    refLimiter.threshold.value = -3; refLimiter.ratio.value = 20;
+    refLimiter.attack.value = 0.003; refLimiter.release.value = 0.15;
+    musicLimiter = audioCtx.createDynamicsCompressor();
+    musicLimiter.threshold.value = -3; musicLimiter.ratio.value = 20;
+    musicLimiter.attack.value = 0.003; musicLimiter.release.value = 0.15;
+    gainMic.connect(micBoostNode);
+    micBoostNode.connect(micCompressor);
+    micCompressor.connect(audioDest);
+    gainMain.connect(mainVolNode);
+    mainVolNode.connect(audioDest);
+    mainVolNode.connect(audioCtx.destination);
+    gainRef.connect(refVolNode);
+    refVolNode.connect(refLimiter);
+    refLimiter.connect(audioDest);
+    refLimiter.connect(audioCtx.destination);
+    musicGainNode.connect(musicLimiter);
+    musicLimiter.connect(audioDest);
+    musicLimiter.connect(audioCtx.destination);
+    return audioCtx;
+  } catch (e) { audioCtx = null; return null; }
+}
+
+function resumeAudio() { const c = ensureAudio(); if (c && c.state === 'suspended') c.resume().catch(()=>{}); }
+function connectMain() { if (!ensureAudio() || srcMain) return; try { srcMain = audioCtx.createMediaElementSource(video); srcMain.connect(gainMain); } catch (e) {} }
+function connectRef() { if (!ensureAudio() || srcRef) return; try { srcRef = audioCtx.createMediaElementSource(refVideo); srcRef.connect(gainRef); } catch (e) {} }
+function connectMusic() { if (!ensureAudio() || musicSrcNode) return; try { musicSrcNode = audioCtx.createMediaElementSource(musicEl); musicSrcNode.connect(musicGainNode); } catch (e) {} }
+function connectMic() {
+  if (!ensureAudio() || !cameraStream) return false;
+  if (!cameraStream.getAudioTracks().length) return false;
+  try {
+    if (micNode) { try { micNode.disconnect(); } catch (e) {} }
+    micNode = audioCtx.createMediaStreamSource(cameraStream);
+    micNode.connect(gainMic);
+    return true;
+  } catch (e) { return false; }
+}
+
+function applyMix() {
+  if (!audioCtx) return;
+  const t = audioCtx.currentTime;
+  const muted = isPaused;
+  const refPlaying = (layoutMode === 'reference' || layoutMode === 'split' || refPreviewing);
+  let duckFactor = 1.0;
+  if (optAudioDuck) {
+    if (layoutMode === 'reference') duckFactor = 0.15;
+    else if (layoutMode === 'split') duckFactor = 0.5;
+  }
+  const mainOn = (!muted && activeSource === 'file' && (layoutMode === 'anchor' || mainPreviewing)) ? 1 : 0;
+  const micOn = (!muted && activeSource === 'camera') ? duckFactor : 0;
+  const refOn = (!muted && refPlaying) ? 1 : 0;
+  const musicOn = (!muted && musicPlaying && musicLoaded) ? 1 : 0;
+  if (gainMain) gainMain.gain.setTargetAtTime(mainOn, t, 0.05);
+  if (gainMic) gainMic.gain.setTargetAtTime(micOn, t, 0.05);
+  if (gainRef) gainRef.gain.setTargetAtTime(refOn, t, 0.05);
+  if (micBoostNode) micBoostNode.gain.setTargetAtTime(micBoostValue, t, 0.05);
+  if (mainVolNode) mainVolNode.gain.setTargetAtTime(mainVolValue, t, 0.05);
+  if (refVolNode) refVolNode.gain.setTargetAtTime(refVolValue, t, 0.05);
+  if (musicGainNode) musicGainNode.gain.setTargetAtTime(musicOn * musicVolValue, t, 0.05);
+}
+
+$('musicFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  musicLoaded = false;
+  musicEl.src = URL.createObjectURL(f);
+  musicEl.load();
+  musicEl.onloadedmetadata = () => {
+    musicLoaded = true;
+    $('musicInfo').style.display = 'block';
+    $('musicInfo').innerHTML = '✅ تم تحميل الموسيقى — المدة: <b>' + fmtTime(musicEl.duration) + '</b>';
+    connectMusic(); updateIndicators();
+    setStatus('ok', '✅ تم تحميل الموسيقى!');
+  };
+  musicEl.onerror = () => {
+    musicLoaded = false;
+    $('musicInfo').style.display = 'block';
+    $('musicInfo').innerHTML = '⚠️ تعذر تحميل ملف الموسيقى';
+  };
+});
+
+$('musicVol').addEventListener('input', e => {
+  musicVolValue = parseInt(e.target.value) / 100;
+  $('musicVolVal').textContent = e.target.value + '%';
+  if (musicGainNode && audioCtx && musicPlaying) musicGainNode.gain.setTargetAtTime(musicVolValue, audioCtx.currentTime, 0.05);
+});
+
+function toggleMusic() {
+  if (!musicLoaded) { setStatus('err', '⚠️ ارفع ملف موسيقى أولاً'); return; }
+  resumeAudio(); connectMusic();
+  if (musicPlaying) { musicEl.pause(); musicPlaying = false; }
+  else { musicEl.currentTime = 0; musicEl.play().catch(()=>{}); musicPlaying = true; }
+  applyMix(); updateMusicUI(); scheduleStudioHide();
+}
+
+function updateMusicUI() {
+  if (musicPlaying) {
+    studioMiniMusic.textContent = '⏸️ إيقاف الموسيقى';
+    studioMiniMusic.classList.add('playing');
+  } else {
+    studioMiniMusic.textContent = '🎵 تشغيل الموسيقى';
+    studioMiniMusic.classList.remove('playing');
+  }
+}
+
+studioMiniMusic.addEventListener('click', (e) => { e.stopPropagation(); toggleMusic(); });
+
+$('sourceButtons').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn || isRecording) return;
+  $('sourceButtons').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeSource = btn.dataset.src;
+  $('fileBox').style.display = (activeSource === 'file') ? 'block' : 'none';
+  $('cameraBox').style.display = (activeSource === 'camera') ? 'block' : 'none';
+  resizeCanvas(); refreshStartBtn(); redraw(0); updateIndicators();
+});
+
+function resizeCanvas() {
+  let w = 1280, h = 720;
+  if (activeSource === 'file' && videoLoaded && video.videoWidth) { w = video.videoWidth; h = video.videoHeight; }
+  else if (activeSource === 'camera' && cameraReady && camVideo.videoWidth) { w = camVideo.videoWidth; h = camVideo.videoHeight; }
+  w -= w % 2; h -= h % 2;
+  if (w > 0 && h > 0) { canvas.width = w; canvas.height = h; }
+}
+
+function refreshStartBtn() {
+  const ready = (activeSource === 'file') ? videoLoaded : cameraReady;
+  $('btnStart').disabled = !ready || isRecording;
+}
+
+async function startCamera(facing) {
+  if (cameraStream) { try { cameraStream.getTracks().forEach(t => t.stop()); } catch (e) {} cameraStream = null; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('متصفحك لا يدعم الكاميرا');
+  const host = location.hostname;
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host.startsWith('192.168.') || host.startsWith('10.') || host === '';
+  if (location.protocol !== 'https:' && !isLocal) throw new Error('يجب فتح الصفحة عبر HTTPS أو localhost');
+  const attempts = [
+    { name: '1280x720', c: { video: { facingMode: { ideal: facing }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, sampleRate: 48000, channelCount: 1 } } },
+    { name: '640x480', c: { video: { facingMode: { ideal: facing }, width: { ideal: 640 }, height: { ideal: 480 } }, audio: true } },
+    { name: 'افتراضي', c: { video: true, audio: true } },
+    { name: 'فيديو فقط', c: { video: true } }
+  ];
+  let stream = null, lastError = null;
+  for (let i = 0; i < attempts.length; i++) {
+    try {
+      setStatus('busy', `⏳ محاولة ${i + 1}/${attempts.length}...`);
+      stream = await navigator.mediaDevices.getUserMedia(attempts[i].c);
+      break;
+    } catch (e) {
+      lastError = e;
+      if (e.name === 'NotAllowedError' || e.name === 'SecurityError') throw new Error('تم رفض الإذن.');
+      if (e.name === 'NotFoundError') throw new Error('لا توجد كاميرا.');
+      continue;
+    }
+  }
+  if (!stream) {
+    let msg = 'فشل تشغيل الكاميرا';
+    if (lastError) { if (lastError.name === 'NotReadableError') msg = 'الكاميرا مشغولة.'; else msg = lastError.message || lastError.name; }
+    throw new Error(msg);
+  }
+  cameraStream = stream;
+  camVideo.srcObject = stream;
+  camVideo.muted = true;
+  camVideo.play().catch(()=>{});
+  await new Promise(res => { if (camVideo.videoWidth) return res(); const t = setTimeout(res, 2000); camVideo.onloadedmetadata = () => { clearTimeout(t); res(); }; });
+  currentFacing = facing;
+  return { hasAudio: stream.getAudioTracks().length > 0 };
+}
+
+$('btnCamOn').addEventListener('click', async function() {
+  const btn = $('btnCamOn');
+  if (btn.disabled) return;
+  btn.disabled = true;
+  const oldText = btn.textContent;
+  btn.textContent = '⏳ جاري التشغيل...';
+  try {
+    setStatus('busy', '⏳ جاري طلب إذن الكاميرا...');
+    const result = await startCamera('user');
+    cameraReady = true;
+    resizeCanvas(); resumeAudio(); connectMic(); applyMix();
+    btn.style.display = 'none';
+    $('camControls').style.display = 'grid';
+    refreshStartBtn(); updateIndicators(); redraw(0);
+    setTimeout(() => redraw(0), 300);
+    setStatus('ok', '✅ الكاميرا جاهزة!' + (result.hasAudio ? ' 🎤' : ''));
+  } catch (e) {
+    setStatus('err', `<b style="color:#ff4757;">⚠️ ${e.message}</b>`);
+    btn.textContent = oldText;
+  } finally { btn.disabled = false; }
+});
+
+$('btnSwitchCam').addEventListener('click', async () => {
+  if (!cameraReady || isRecording) return;
+  const btn = $('btnSwitchCam');
+  btn.disabled = true;
+  try {
+    await startCamera(currentFacing === 'user' ? 'environment' : 'user');
+    connectMic(); applyMix(); resizeCanvas(); redraw(0);
+    setStatus('ok', '✅ تم التبديل');
+  } catch (e) { setStatus('err', '⚠️ ' + e.message); } finally { btn.disabled = false; }
+});
+
+$('btnCamOff').addEventListener('click', () => {
+  if (isRecording) return;
+  if (cameraStream) cameraStream.getTracks().forEach(t => t.stop());
+  cameraStream = null; cameraReady = false; camVideo.srcObject = null;
+  const btn = $('btnCamOn');
+  btn.style.display = 'flex'; btn.disabled = false;
+  btn.textContent = '🎥 تشغيل الكاميرا';
+  $('camControls').style.display = 'none';
+  refreshStartBtn(); redraw(0); updateIndicators();
+  setStatus('', '👆 اضغط «تشغيل الكاميرا»');
+});
+
+$('videoFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  video.src = URL.createObjectURL(f);
+  video.load();
+  video.onloadedmetadata = () => {
+    videoLoaded = true; video.currentTime = 0;
+    mainTrimStart = 0; mainTrimEnd = video.duration;
+    $('mainTrimmer').style.display = 'block';
+    if (!mainTrimmer) initMainTrimmer();
+    else mainTrimmer.render();
+    if (activeSource === 'file') resizeCanvas();
+    refreshStartBtn(); redraw(0); updateIndicators();
+    setStatus('ok', '✅ الفيديو جاهز! المدة: ' + fmtTime(video.duration));
+  };
+});
+
+$('logoFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image();
+  img.onload = () => {
+    logoImg = img;
+    logoPreview.src = img.src;
+    logoPreview.classList.add('visible');
+    const info = logoPreview.parentElement.querySelector('.info');
+    if (info) info.innerHTML = '<b style="color:#00FF00;">✅ تم اختيار الشعار</b>';
+    redraw(0);
+  };
+  img.src = URL.createObjectURL(f);
+});
+
+$('refFile').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  refLoaded = false;
+  refVideo.src = URL.createObjectURL(f);
+  refVideo.load();
+  $('refBox').style.display = 'block';
+  $('refVideoWrap').classList.add('show');
+  $('refStatus').textContent = '⏳ جاري التحميل...';
+  refVideo.onloadedmetadata = () => {
+    refLoaded = true;
+    refTrimStart = 0; refTrimEnd = refVideo.duration;
+    $('refStatus').textContent = '✅ جاهز';
+    $('refStatus').classList.add('ready');
+    if (!refTrimmer) initRefTrimmer();
+    else refTrimmer.render();
+    updateIndicators();
+    connectRef(); applyMix();
+    modeRef.classList.remove('disabled');
+    modeSplit.classList.remove('disabled');
+    setStatus('ok', '✅ الفيديو المرجعي جاهز! المدة: ' + fmtTime(refVideo.duration));
+  };
+});
+
+function setLayout(mode) {
+  if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; }
+  if (mode === 'reference' && !refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; }
+  targetLayoutMode = mode;
+  if (optShowTransition) transitionProgress = 1.0;
+  else { transitionProgress = 0; applyLayoutNow(mode); }
+  updateStudioUI();
+}
+
+function applyLayoutNow(mode) {
+  layoutMode = mode;
+  if (mode === 'reference' || mode === 'split') {
+    if (refLoaded) {
+      if (!refVideo._hasStarted || refVideo.currentTime < refTrimStart - 0.1) {
+        refVideo.currentTime = refTrimStart;
+        refVideo._hasStarted = true;
+      }
+      refVideo.play().catch(()=>{});
+    }
+    if (activeSource === 'file') video.pause();
+  } else {
+    if (refLoaded) { refVideo.pause(); refVideo._hasStarted = false; }
+    if (activeSource === 'file' && isRecording && !isPaused) {
+      if (video.currentTime < mainTrimStart - 0.1 || video.currentTime > mainTrimEnd + 0.5) video.currentTime = mainTrimStart;
+      video.play().catch(()=>{});
+    }
+  }
+  applyMix();
+  updateStudioUI();
+}
+
+function updateStudioUI() {
+  [modeAnchor, modeRef, modeSplit].forEach(b => b.classList.remove('active'));
+  if (layoutMode === 'anchor') modeAnchor.classList.add('active');
+  else if (layoutMode === 'reference') modeRef.classList.add('active');
+  else if (layoutMode === 'split') modeSplit.classList.add('active');
+  if (isRecording && layoutMode === 'anchor' && refLoaded) studioMiniRef.classList.add('show');
+  else studioMiniRef.classList.remove('show');
+  if (isRecording && musicLoaded) studioMiniMusic.classList.add('show');
+  else studioMiniMusic.classList.remove('show');
+  if (isPaused) {
+    studioLiveBadge.className = 'studio-live-badge paused';
+    studioLiveBadge.textContent = '⏸️ إيقاف مؤقت';
+    studioTimer.classList.add('paused');
+  } else {
+    studioLiveBadge.className = 'studio-live-badge';
+    if (layoutMode === 'reference') studioLiveBadge.textContent = '🎞️ عرض المرجعي';
+    else if (layoutMode === 'split') studioLiveBadge.textContent = '⚖️ مقسوم';
+    else studioLiveBadge.textContent = '🔴 بث مباشر';
+    studioTimer.classList.remove('paused');
+  }
+  modeRef.classList.toggle('disabled', !refLoaded);
+  modeSplit.classList.toggle('disabled', !refLoaded);
+  // تحديث زر التلقين
+  updatePrompterVisibility();
+}
+
+modeAnchor.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } setLayout('anchor'); });
+modeRef.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('reference'); });
+modeSplit.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('split'); });
+studioMiniRef.addEventListener('click', (e) => { e.stopPropagation(); if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('reference'); });
+
+$('btnStart').addEventListener('click', startRecording);
+$('btnStop').addEventListener('click', stopRecording);
+studioStopBtn.addEventListener('click', stopRecording);
+studioPauseBtn.addEventListener('click', togglePause);
+studioResumeBtn.addEventListener('click', togglePause);
+
+function startRecording() {
+  const ready = (activeSource === 'file') ? videoLoaded : cameraReady;
+  if (!ready || isRecording) return;
+  try {
+    resumeAudio();
+    if (activeSource === 'file') connectMain();
+    else connectMic();
+    if (refLoaded) connectRef();
+    if (musicLoaded) connectMusic();
+    layoutMode = 'anchor';
+    targetLayoutMode = 'anchor';
+    transitionProgress = 0;
+    isPaused = false;
+    tickerInited = false;
+    applyMix();
+    canvasStream = canvas.captureStream(30);
+    const tracks = [];
+    canvasStream.getVideoTracks().forEach(t => tracks.push(t));
+    let audioAdded = false;
+    if (audioDest) {
+      const aTracks = audioDest.stream.getAudioTracks();
+      if (aTracks.length) { aTracks.forEach(t => tracks.push(t)); audioAdded = true; }
+    }
+    if (!audioAdded && activeSource === 'file') {
+      try {
+        const fn = video.captureStream || video.mozCaptureStream;
+        if (fn) {
+          const vs = fn.call(video);
+          const at = vs.getAudioTracks();
+          if (at.length) { at.forEach(t => tracks.push(t)); audioAdded = true; }
+        }
+      } catch (e) {}
+    }
+    const fmt = pickBestMime(audioAdded);
+    pickMime = fmt.mime; outputExt = fmt.ext;
+    const options = { videoBitsPerSecond: 5000000 };
+    if (pickMime) options.mimeType = pickMime;
+    if (audioAdded) options.audioBitsPerSecond = 128000;
+    mediaRecorder = new MediaRecorder(new MediaStream(tracks), options);
+    recordedChunks = [];
+    mediaRecorder.ondataavailable = e => { if (e.data.size) recordedChunks.push(e.data); };
+    mediaRecorder.onstop = finishRecording;
+    mediaRecorder.start(500);
+    isRecording = true;
+    segments = []; currentSegmentStart = Date.now();
+    startTimer();
+    enterStudio();
+    $('btnStart').style.display = 'none';
+    $('btnStop').style.display = 'flex';
+    $('btnDownload').style.display = 'none';
+    if (activeSource === 'file') { video.currentTime = mainTrimStart; video.play().catch(()=>{}); }
+    refVideo._hasStarted = false;
+    musicPlaying = false;
+    updateMusicUI();
+    applyMix();
+    // ✨ تهيئة التلقين
+    prompterVisible = true;
+    prompterAutoScroll = true;
+    prompterInitialized = false;
+    resetPrompterScroll();
+    setTimeout(() => {
+      resetPrompterScroll();
+      updatePrompterVisibility();
+    }, 200);
+    updatePrompterVisibility();
+    setStatus('busy', '<span class="live-dot"></span> التسجيل جارٍ' + (prompterEnabled && prompterText.value.trim() ? ' — اقرأ من التلقين 📖' : (musicLoaded ? ' — اضغط 🎵 لتشغيل الموسيقى' : '')));
+  } catch (e) {
+    setStatus('err', '⚠️ ' + e.message);
+    isRecording = false;
+  }
+}
+
+function enterStudio() {
+  document.body.classList.add('studio-mode');
+  if (canvas.parentElement !== studioVideoArea) studioVideoArea.appendChild(canvas);
+  canvas.style.cssText = 'width:100%; height:auto; max-width:100%; max-height:100%; display:block; border-radius:12px;';
+  updateStudioUI();
+  studioTapHint.style.display = 'block';
+  studioTapHint.style.animation = 'none';
+  void studioTapHint.offsetWidth;
+  studioTapHint.style.animation = 'hintFade 5s forwards';
+  scheduleStudioHide();
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => { fitCanvasToArea(); redraw(0); });
+  setTimeout(() => { fitCanvasToArea(); redraw(0); updatePrompterPadding(); }, 100);
+  setTimeout(() => { fitCanvasToArea(); redraw(0); updatePrompterPadding(); }, 400);
+}
+
+function fitCanvasToArea() {
+  const area = studioVideoArea.getBoundingClientRect();
+  if (area.width <= 0 || area.height <= 0) return;
+  const style = window.getComputedStyle(studioVideoArea);
+  const availW = area.width - (parseFloat(style.paddingLeft)||0) - (parseFloat(style.paddingRight)||0);
+  const availH = area.height - (parseFloat(style.paddingTop)||0) - (parseFloat(style.paddingBottom)||0);
+  if (availW <= 0 || availH <= 0) return;
+  const canvasAspect = canvas.width / canvas.height;
+  const availAspect = availW / availH;
+  let newW, newH;
+  if (canvasAspect > availAspect) { newW = availW; newH = availW / canvasAspect; }
+  else { newH = availH; newW = availH * canvasAspect; }
+  canvas.style.width = newW + 'px';
+  canvas.style.height = newH + 'px';
+}
+
+function exitStudio() {
+  document.body.classList.remove('studio-mode');
+  document.body.style.overflow = '';
+  const wrap = $('previewWrap');
+  if (wrap && canvas.parentElement !== wrap) {
+    wrap.appendChild(canvas);
+    canvas.style.cssText = 'max-width:100%; display:block; border-radius:14px; box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,215,0,0.15); background: #000;';
+    canvas.style.width = '100%'; canvas.style.height = 'auto';
+  }
+  if (studioControlsHideTimer) clearTimeout(studioControlsHideTimer);
+  studioControlsHidden = false;
+  studioOverlay.classList.remove('studio-controls-hidden');
+  // إخفاء طبقة التلقين
+  prompterOverlay.classList.remove('show');
+  studioMiniPrompter.classList.remove('show');
+  studioPrompterControls.classList.remove('show');
+}
+
+function scheduleStudioHide() {
+  if (studioControlsHideTimer) clearTimeout(studioControlsHideTimer);
+  showStudioControls();
+  studioControlsHideTimer = setTimeout(() => hideStudioControls(), 4000);
+}
+function hideStudioControls() { studioControlsHidden = true; studioOverlay.classList.add('studio-controls-hidden'); }
+function showStudioControls() { studioControlsHidden = false; studioOverlay.classList.remove('studio-controls-hidden'); }
+
+studioVideoArea.addEventListener('click', e => {
+  if (e.target.tagName === 'BUTTON') return;
+  if (studioControlsHidden) { showStudioControls(); scheduleStudioHide(); }
+  else hideStudioControls();
+});
+
+[studioPauseBtn, studioResumeBtn, studioStopBtn].forEach(btn => btn.addEventListener('click', scheduleStudioHide));
+
+window.addEventListener('resize', () => { if (isRecording && document.body.classList.contains('studio-mode')) { fitCanvasToArea(); updatePrompterPadding(); } });
+window.addEventListener('orientationchange', () => { setTimeout(() => { if (isRecording && document.body.classList.contains('studio-mode')) { fitCanvasToArea(); updatePrompterPadding(); } }, 300); });
+
+function togglePause() { if (!isRecording) return; if (isPaused) resumeRecording(); else pauseRecording(); }
+
+function pauseRecording() {
+  if (!isRecording || isPaused) return;
+  isPaused = true;
+  const dur = (Date.now() - currentSegmentStart) / 1000;
+  if (dur > 0.5) segments.push({ duration: dur });
+  try { video.pause(); refVideo.pause(); if (musicPlaying) musicEl.pause(); } catch (e) {}
+  applyMix();
+  studioPauseBtn.style.display = 'none';
+  studioResumeBtn.style.display = 'flex';
+  studioTimer.classList.add('paused');
+  startPauseTimer();
+  updateStudioUI(); scheduleStudioHide(); updateSegmentsLog();
+  setStatus('paused', '⏸️ إيقاف مؤقت — انتقل بحرية');
+}
+
+function resumeRecording() {
+  if (!isRecording || !isPaused) return;
+  accumulatedPauseTime += Date.now() - pauseStartTime;
+  isPaused = false;
+  currentSegmentStart = Date.now();
+  if (layoutMode === 'reference' || layoutMode === 'split') { if (refLoaded) refVideo.play().catch(()=>{}); }
+  else if (activeSource === 'file') video.play().catch(()=>{});
+  if (musicPlaying) musicEl.play().catch(()=>{});
+  applyMix();
+  studioPauseBtn.style.display = 'flex';
+  studioResumeBtn.style.display = 'none';
+  studioTimer.classList.remove('paused');
+  stopPauseTimer();
+  updateStudioUI(); scheduleStudioHide(); updateSegmentsLog();
+  setStatus('busy', '🔴 تم استئناف التسجيل');
+}
+
+function startTimer() {
+  recordStartTime = Date.now();
+  accumulatedPauseTime = 0;
+  $('timer').classList.add('show');
+  $('timer').textContent = '00:00';
+  studioTimerText.textContent = '00:00';
+  timerInterval = setInterval(() => {
+    const e = Math.floor((Date.now() - recordStartTime - accumulatedPauseTime) / 1000);
+    const t = fmtTime(e);
+    $('timer').textContent = t;
+    studioTimerText.textContent = t;
+  }, 250);
+}
+function stopTimer() { if (timerInterval) clearInterval(timerInterval); $('timer').classList.remove('show'); }
+function startPauseTimer() {
+  pauseStartTime = Date.now();
+  $('pauseTimer').classList.add('show');
+  pauseTimerInterval = setInterval(() => {
+    $('pauseTimerValue').textContent = fmtTime(Math.floor((Date.now() - pauseStartTime) / 1000));
+  }, 250);
+}
+function stopPauseTimer() { if (pauseTimerInterval) clearInterval(pauseTimerInterval); $('pauseTimer').classList.remove('show'); }
+
+function updateSegmentsLog() {
+  if (!segments.length) { $('segmentsLog').innerHTML = '<div style="text-align:center; color:#5a7a9a; padding:10px; font-size:0.8rem;">لم يبدأ بعد...</div>'; return; }
+  $('segmentsLog').innerHTML = segments.map((s, i) => `<div class="segment-item"><span class="seg-num">مقطع ${i + 1}</span><span>${fmtTime(s.duration)}</span><span>✅</span></div>`).join('');
+}
+
+function stopRecording() {
+  if (!isRecording) return;
+  exitStudio();
+  if (isPaused) { const dur = (Date.now() - currentSegmentStart) / 1000; if (dur > 0.5) segments.push({ duration: dur }); }
+  isRecording = false; isPaused = false;
+  stopTimer(); stopPauseTimer();
+  if (musicPlaying) { try { musicEl.pause(); } catch(e){} musicPlaying = false; updateMusicUI(); }
+  try { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); } catch (e) { finishRecording(); }
+  try { video.pause(); refVideo.pause(); } catch (e) {}
+  $('btnStop').style.display = 'none';
+  $('btnStart').style.display = 'flex';
+  $('btnStart').disabled = false;
+  updateIndicators(); updateSegmentsLog();
+  setStatus('busy', '⏳ جاري تجهيز الملف...');
+}
+
+function finishRecording() {
+  if (!recordedChunks.length) { setStatus('err', '⚠️ لم يتم تسجيل بيانات'); return; }
+  const mime = mediaRecorder.mimeType || pickMime || 'video/webm';
+  outputBlob = new Blob(recordedChunks, { type: mime });
+  outputExt = mime.indexOf('mp4') !== -1 ? 'mp4' : 'webm';
+  setStatus('ok', '✅ الفيديو جاهز! ' + segments.length + ' مقاطع');
+  $('btnDownload').style.display = 'flex';
+}
+
+$('btnDownload').addEventListener('click', () => {
+  if (!outputBlob) return;
+  const name = 'فيديو_' + (newsText.value.trim().slice(0, 15) || 'استوديو') + '_' + segments.length + 'مقاطع.' + outputExt;
+  const url = URL.createObjectURL(outputBlob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
+  setStatus('ok', '✅ تم التحميل: ' + name);
+});
+
+function updateIndicators() {
+  $('indSource').classList.toggle('on', (activeSource === 'file' && videoLoaded) || (activeSource === 'camera' && cameraReady));
+  $('indSource').textContent = (activeSource === 'file' && videoLoaded) ? '📹 الفيديو' : (cameraReady ? '🎥 الكاميرا' : '📹 المصدر');
+  $('indMic').classList.toggle('on', cameraStream && cameraStream.getAudioTracks().length > 0);
+  $('indMic').textContent = (cameraStream && cameraStream.getAudioTracks().length > 0) ? '🎤 الميكروفون' : '🎤 مكتوم';
+  $('indRef').classList.toggle('ref-on', refLoaded);
+  $('indRef').textContent = refLoaded ? '🎞️ المرجعي جاهز' : '🎞️ المرجعي';
+  $('indMusic').classList.toggle('ref-on', musicLoaded);
+  $('indMusic').textContent = musicPlaying ? '🎵 يعمل' : (musicLoaded ? '🎵 جاهزة' : '🎵 الموسيقى');
+  const prompterReady = prompterEnabled && prompterText.value.trim().length > 0;
+  const promInd = $('indPrompter');
+  promInd.className = 'indicator' + (prompterReady ? ' prompter-on' : '');
+  promInd.textContent = prompterReady ? '📖 التلقين جاهز' : '📖 التلقين';
+  const recInd = $('indRec');
+  recInd.className = 'indicator';
+  if (isPaused) { recInd.classList.add('paused'); recInd.textContent = '⏸️ إيقاف'; }
+  else if (isRecording) { recInd.classList.add('on'); recInd.textContent = '🔴 يسجل'; }
+  else recInd.textContent = '🔴 التسجيل';
+}
+
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    this.beginPath(); this.moveTo(x + r, y); this.lineTo(x + w - r, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r); this.lineTo(x + w, y + h - r);
+    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h); this.lineTo(x + r, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r); this.lineTo(x, y + r);
+    this.quadraticCurveTo(x, y, x + r, y); this.closePath(); return this;
+  };
+}
+
+function drawCover(el, x, y, w, h) {
+  if (!el.videoWidth) return false;
+  const vw = el.videoWidth, vh = el.videoHeight;
+  const va = vw / vh, ca = w / h;
+  let dw, dh, dx, dy;
+  if (va > ca) { dw = w; dh = w / va; dx = x; dy = y + (h - dh) / 2; }
+  else { dh = h; dw = h * va; dx = x + (w - dw) / 2; dy = y; }
+  try { ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.drawImage(el, dx, dy, dw, dh); ctx.restore(); return true; } catch (e) { return false; }
+}
+
+function drawPiP(el, W, H) {
+  if (!optShowPiP || !el.videoWidth) { canvas._pipBounds = null; return; }
+  const pw = W * pipSize, ph = pw * (9 / 16);
+  const px = (pipX * W) - pw / 2, py = (pipY * H) - ph / 2;
+  ctx.save(); ctx.shadowBlur = 30; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowOffsetY = 8;
+  ctx.fillStyle = '#000'; ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 12); ctx.fill(); ctx.restore();
+  ctx.save(); ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 12); ctx.clip(); drawCover(el, px, py, pw, ph); ctx.restore();
+  const pulse = (Math.sin(Date.now() / 300) + 1) / 2;
+  const borderColor = layoutMode === 'reference' ? `rgba(255, 215, 0, ${0.7 + pulse * 0.3})` : '#FFD700';
+  ctx.save(); ctx.strokeStyle = borderColor; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 12); ctx.stroke(); ctx.restore();
+  const badgeW = 60, badgeH = 22;
+  ctx.save(); ctx.fillStyle = 'rgba(0,0,0,0.85)'; ctx.beginPath(); ctx.roundRect(px + 8, py + 8, badgeW, badgeH, 6); ctx.fill();
+  ctx.fillStyle = '#FFD700'; ctx.font = `900 12px Cairo, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('أنت', px + 8 + badgeW / 2, py + 8 + badgeH / 2); ctx.restore();
+  canvas._pipBounds = { x: px, y: py, w: pw, h: ph };
+}
+
+function drawNewsLowerThird(W, H, dt) {
+  const news = newsText.value.trim();
+  if (!news) { canvas._newsBounds = null; tickerInited = false; return; }
+  const sizes = { 2: 0.028, 3: 0.038, 4: 0.05, 5: 0.065 };
+  const fs = W * (sizes[newsSize] || 0.038);
+  ctx.font = `900 ${fs}px Cairo, Tahoma, sans-serif`;
+  const textWidth = ctx.measureText(news).width;
+  const lineH = fs * 1.3;
+  const barH = lineH + 32;
+  const barY = H - barH;
+  const barGrad = ctx.createLinearGradient(0, barY, 0, H);
+  barGrad.addColorStop(0, 'rgba(0, 0, 0, 0.3)');
+  barGrad.addColorStop(0.3, 'rgba(0, 0, 0, 0.85)');
+  barGrad.addColorStop(1, 'rgba(0, 0, 0, 0.95)');
+  ctx.fillStyle = barGrad; ctx.fillRect(0, barY, W, barH);
+  ctx.fillStyle = '#ff4757'; ctx.fillRect(0, barY, W, 4);
+  const badgeW = fs * 4, badgeH = fs * 1.6;
+  const badgeX = W - badgeW - 20, badgeY = barY + (barH - badgeH) / 2;
+  const bGrad = ctx.createLinearGradient(badgeX, 0, badgeX + badgeW, 0);
+  bGrad.addColorStop(0, '#ff4757'); bGrad.addColorStop(1, '#c0392b');
+  ctx.fillStyle = bGrad; ctx.beginPath(); ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 4); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = `900 ${fs * 0.85}px Cairo, sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('مباشر', badgeX + badgeW / 2, badgeY + badgeH / 2);
+  const tickerLeft = 20, tickerRight = badgeX - 20;
+  const textY = barY + barH / 2 + 2;
+  const gap = fs * 3;
+  const cycleWidth = textWidth + gap;
+  if (!tickerInited) { tickerX = W; tickerInited = true; }
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(tickerLeft, barY, tickerRight - tickerLeft, barH);
+  ctx.clip();
+  ctx.fillStyle = '#fff';
+  ctx.font = `900 ${fs}px Cairo, Tahoma, sans-serif`;
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(news, tickerX, textY);
+  ctx.fillText(news, tickerX + cycleWidth, textY);
+  ctx.fillText(news, tickerX + cycleWidth * 2, textY);
+  ctx.fillText(news, tickerX + cycleWidth * 3, textY);
+  ctx.restore();
+  const speed = W * 0.12;
+  tickerX -= speed * (dt || 0.033);
+  if (tickerX <= -cycleWidth) tickerX += cycleWidth;
+  canvas._newsBounds = { x: 0, y: barY, w: W, h: barH };
+}
+
+function drawTransitionScreen(W, H) {
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#0a1a2e'); grad.addColorStop(0.5, '#1a0f2e'); grad.addColorStop(1, '#0a1a2e');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+  const pulse = (Math.sin(Date.now() / 400) + 1) / 2;
+  ctx.strokeStyle = `rgba(255, 215, 0, ${0.3 + pulse * 0.4})`; ctx.lineWidth = 4; ctx.strokeRect(20, 20, W - 40, H - 40);
+  if (logoImg) { const lw = W * 0.15; const lh = (logoImg.height / logoImg.width) * lw; ctx.globalAlpha = 0.9; ctx.drawImage(logoImg, W / 2 - lw / 2, H * 0.25 - lh / 2, lw, lh); ctx.globalAlpha = 1; }
+  const fs = W * 0.05;
+  ctx.font = `900 ${fs}px Cairo, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#FFD700'; ctx.shadowBlur = 20; ctx.shadowColor = '#FFD700';
+  ctx.fillText('⏸️ جاري الانتقال...', W / 2, H * 0.5); ctx.shadowBlur = 0;
+  const pauseSec = Math.floor((Date.now() - pauseStartTime) / 1000);
+  ctx.font = `700 ${W * 0.03}px Cairo, sans-serif`;
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillText('مدة الإيقاف: ' + fmtTime(pauseSec), W / 2, H * 0.7);
+}
+
+function drawLogo(W, H) {
+  if (!logoImg) { canvas._logoBounds = null; return; }
+  const lw = W * 0.12; const lh = (logoImg.height / logoImg.width) * lw;
+  ctx.save(); ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.drawImage(logoImg, 20, 20, lw, lh); ctx.restore();
+  canvas._logoBounds = { x: 20, y: 20, w: lw, h: lh };
+}
+
+function drawEmptyState(W, H, msg) {
+  ctx.fillStyle = '#0a1a2e'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#5a7a9a'; ctx.font = `700 ${W * 0.025}px Cairo, sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(msg || '🎥 اختر مصدراً', W / 2, H / 2);
+}
+
+function drawThinGoldFrame(W, H, PAD) {
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#B8860B'); grad.addColorStop(0.2, '#FFD700'); grad.addColorStop(0.4, '#FFF8DC');
+  grad.addColorStop(0.6, '#FFD700'); grad.addColorStop(0.8, '#DAA520'); grad.addColorStop(1, '#B8860B');
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+  const shine = ctx.createLinearGradient(0, 0, 0, PAD);
+  shine.addColorStop(0, 'rgba(255, 255, 255, 0.6)'); shine.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.fillStyle = shine; ctx.fillRect(0, 0, W, PAD);
+}
+
+function redraw(dt) {
+  const W = canvas.width, H = canvas.height;
+  if (!W || !H) return;
+  const PAD = 4, RADIUS = 10;
+  const innerW = W - PAD * 2, innerH = H - PAD * 2;
+  drawThinGoldFrame(W, H, PAD);
+  ctx.save();
+  ctx.beginPath(); ctx.roundRect(PAD, PAD, innerW, innerH, RADIUS); ctx.clip();
+  ctx.translate(PAD, PAD);
+  if (transitionProgress > 0) {
+    transitionProgress -= (dt || 0.033) * 3.5;
+    if (transitionProgress < 0.5 && layoutMode !== targetLayoutMode) applyLayoutNow(targetLayoutMode);
+    if (transitionProgress <= 0) transitionProgress = 0;
+  }
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, innerW, innerH);
+  if (isPaused && isRecording) {
+    if (optShowTransition) drawTransitionScreen(innerW, innerH);
+    else {
+      if (activeSource === 'camera' && camVideo.readyState >= 2) drawCover(camVideo, 0, 0, innerW, innerH);
+      else if (video.readyState >= 2) drawCover(video, 0, 0, innerW, innerH);
+    }
+  } else {
+    if (transitionProgress > 0) {
+      const alpha = Math.abs(transitionProgress - 0.5) * 2;
+      ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.6})`;
+      ctx.fillRect(0, 0, innerW, innerH);
+    }
+    if (layoutMode === 'anchor') {
+      if (activeSource === 'camera' && camVideo.readyState >= 2) drawCover(camVideo, 0, 0, innerW, innerH);
+      else if (video.readyState >= 2) drawCover(video, 0, 0, innerW, innerH);
+      else drawEmptyState(innerW, innerH);
+      canvas._pipBounds = null;
+    } else if (layoutMode === 'reference') {
+      if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, 0, innerW, innerH);
+      else drawEmptyState(innerW, innerH, '🎞️ اضغط «عرض المرجعي»');
+      if (activeSource === 'camera' && camVideo.readyState >= 2) drawPiP(camVideo, innerW, innerH);
+      else if (video.readyState >= 2) drawPiP(video, innerW, innerH);
+      else canvas._pipBounds = null;
+    } else if (layoutMode === 'split') {
+      const halfW = innerW / 2;
+      if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, 0, halfW, innerH);
+      if (activeSource === 'camera' && camVideo.readyState >= 2) drawCover(camVideo, halfW, 0, halfW, innerH);
+      else if (video.readyState >= 2) drawCover(video, halfW, 0, halfW, innerH);
+      ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(halfW, 0); ctx.lineTo(halfW, innerH); ctx.stroke();
+      ctx.fillStyle = 'rgba(0,0,0,0.7)'; ctx.fillRect(halfW - 90, 20, 80, 30);
+      ctx.fillStyle = '#9c27b0'; ctx.font = '900 16px Cairo, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('المرجعي', halfW - 50, 35);
+      ctx.fillStyle = 'rgba(0,0,0,0.7)'; ctx.fillRect(halfW + 10, 20, 80, 30);
+      ctx.fillStyle = '#FFD700'; ctx.fillText('أنت', halfW + 50, 35);
+      canvas._pipBounds = null;
+    }
+    drawLogo(innerW, innerH);
+    drawNewsLowerThird(innerW, innerH, dt);
+  }
+  ctx.restore();
+}
+
+document.addEventListener('keydown', e => {
+  if (!isRecording) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch (e.key.toLowerCase()) {
+    case 'a': if (refLoaded) setLayout('anchor'); break;
+    case 'r': if (refLoaded) setLayout('reference'); break;
+    case 's': if (refLoaded) setLayout('split'); break;
+    case 'm': if (musicLoaded) toggleMusic(); break;
+    case 'p': prompterVisible = !prompterVisible; updatePrompterVisibility(); break;
+    case ' ': e.preventDefault(); togglePause(); break;
+  }
+  scheduleStudioHide();
+});
+
+function renderLoop(ts) {
+  const dt = lastFrameTime ? Math.min(0.1, (ts - lastFrameTime) / 1000) : 0.033;
+  lastFrameTime = ts;
+  const camLive = (activeSource === 'camera' && cameraReady && cameraStream);
+  const videoLive = (activeSource === 'file' && videoLoaded && !video.paused && !video.ended);
+  const refLive = (refLoaded && !refVideo.paused && !refVideo.ended);
+  const hasNews = !!newsText.value.trim();
+  const needsAnim = isRecording || isPaused || layoutMode === 'reference' || transitionProgress > 0 || camLive || videoLive || refLive || hasNews || mainPreviewing || refPreviewing;
+  if (needsAnim) redraw(dt);
+  // ✨ تحديث التلقين
+  animatePrompter(ts);
+  animFrame = requestAnimationFrame(renderLoop);
+}
+
+function pickBestMime(hasAudio) {
+  if (typeof MediaRecorder === 'undefined') return { mime: '', ext: 'webm' };
+  const list = hasAudio ? ['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'] : ['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm'];
+  for (const m of list) { try { if (MediaRecorder.isTypeSupported(m)) return { mime: m, ext: m.indexOf('mp4') !== -1 ? 'mp4' : 'webm' }; } catch (e) {} }
+  return { mime: '', ext: 'webm' };
+}
+
+$('optAudioDuck').addEventListener('change', e => { optAudioDuck = e.target.checked; applyMix(); });
+$('optShowPiP').addEventListener('change', e => { optShowPiP = e.target.checked; redraw(0); });
+$('optLoopClip').addEventListener('change', e => { optLoopClip = e.target.checked; });
+$('optShowTransition').addEventListener('change', e => { optShowTransition = e.target.checked; });
+
+$('sizeButtons').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  $('sizeButtons').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  newsSize = parseInt(btn.dataset.size);
+  tickerInited = false;
+  redraw(0);
+});
+
+newsText.addEventListener('input', () => { tickerInited = false; redraw(0); });
+
+$('micVol').addEventListener('input', e => {
+  micBoostValue = parseInt(e.target.value) / 100;
+  $('micVolVal').textContent = e.target.value + '%';
+  if (micBoostNode && audioCtx) micBoostNode.gain.setTargetAtTime(micBoostValue, audioCtx.currentTime, 0.05);
+});
+
+$('mainVol').addEventListener('input', e => {
+  mainVolValue = parseInt(e.target.value) / 100;
+  $('mainVolVal').textContent = e.target.value + '%';
+  if (mainVolNode && audioCtx) mainVolNode.gain.setTargetAtTime(mainVolValue, audioCtx.currentTime, 0.05);
+});
+
+$('refVolSlider').addEventListener('input', e => {
+  refVolValue = parseInt(e.target.value) / 100;
+  $('refVolVal').textContent = e.target.value + '%';
+  if (refVolNode && audioCtx) refVolNode.gain.setTargetAtTime(refVolValue, audioCtx.currentTime, 0.05);
+});
+
+canvas.width = 1280; canvas.height = 720;
+setTimeout(() => {
+  const wrap = $('previewWrap');
+  if (wrap && canvas.parentElement !== wrap) {
+    canvas.style.width = '100%'; canvas.style.height = 'auto';
+    wrap.appendChild(canvas);
+  }
+  redraw(0);
+}, 100);
+
+updateIndicators();
+updateSegmentsLog();
+updatePrompterContent();
+updatePrompterStyle();
+animFrame = requestAnimationFrame(renderLoop);
+
+console.log('✅ الاستوديو جاهز!');
+console.log('📖 ميزة التلقين مفعّلة — الصق النص في «نص التلقين» وستظهر لك أثناء التسجيل.');
+</script>
 </body>
 </html>
