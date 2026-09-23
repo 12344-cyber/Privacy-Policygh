@@ -61,6 +61,7 @@
   .indicator.ref-on { background: #9c27b015; border-color: #9c27b050; color: #d8b4ff; }
   .indicator.paused { background: #ffc10715; border-color: #ffc10750; color: #ffc107; }
   .indicator.prompter-on { background: #ff980015; border-color: #ff980050; color: #ff9800; }
+  .indicator.commentary-on { background: #ff572215; border-color: #ff572250; color: #ff5722; }
   .pause-options { background: #1a1a2e; border: 2px solid #ffc107; border-radius: 14px; padding: 12px; margin-top: 10px; }
   .pause-options-title { color: #ffc107; font-weight: 900; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
   .switch-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2e4a6a; }
@@ -74,6 +75,7 @@
   .switch input:checked + .slider { background: #ffc107; }
   .switch input:checked + .slider:before { transform: translateX(22px); }
   .switch.orange input:checked + .slider { background: #ff9800; }
+  .switch.red input:checked + .slider { background: #ff5722; }
   .segments-log { margin-top: 10px; max-height: 150px; overflow-y: auto; background: #0a1a2a; border-radius: 10px; padding: 8px; }
   .segment-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: #1a2f3f; border-radius: 8px; margin-bottom: 4px; font-size: 0.8rem; color: #b8d0e8; }
   .segment-item .seg-num { background: #00FF00; color: #0a1a2e; padding: 2px 8px; border-radius: 10px; font-weight: 900; font-size: 0.75rem; }
@@ -88,11 +90,18 @@
   #refVolSlider::-moz-range-thumb { background: #9c27b0; box-shadow: 0 0 12px #9c27b0; }
   #musicVol::-webkit-slider-thumb { background: #e91e63; box-shadow: 0 0 12px #e91e63; }
   #musicVol::-moz-range-thumb { background: #e91e63; box-shadow: 0 0 12px #e91e63; }
-  /* ===== سلايدرات التلقين ===== */
   #prompterSize::-webkit-slider-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
   #prompterSize::-moz-range-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
   #prompterSpeed::-webkit-slider-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
   #prompterSpeed::-moz-range-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
+  #introDuration::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #introDuration::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckLevel::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckLevel::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckThreshold::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckThreshold::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckRelease::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
+  #duckRelease::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
   .trimmer { background: #0a1a2a; border: 2px solid #FFD700; border-radius: 14px; padding: 16px 12px 12px; margin-top: 10px; }
   .trimmer-title { color: #FFD700; font-weight: 900; font-size: 0.9rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .trimmer-title .trimmer-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; background: #FFD70020; color: #FFD700; border: 1px solid #FFD70050; font-weight: 700; }
@@ -149,16 +158,20 @@
   .studio-video-area { flex: 1; min-height: 0; min-width: 0; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse at center, #0a1520 0%, #000 100%); padding: 60px 16px 100px 16px; }
   .studio-video-area canvas { display: block; background: #000; border-radius: 12px; box-shadow: 0 12px 48px rgba(0,0,0,0.9), 0 0 0 1px rgba(255, 215, 0, 0.5); max-width: 100%; max-height: 100%; width: auto; height: auto; }
   .studio-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px; padding-bottom: max(14px, env(safe-area-inset-bottom)); background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); z-index: 10; transition: opacity 0.4s ease; }
-  .studio-modes-row { max-width: 720px; margin: 0 auto 10px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  .studio-mode-btn { padding: 12px 6px; border: 2px solid #2e4a6a; background: rgba(10, 26, 46, 0.9); color: #b8d0e8; border-radius: 12px; font-family: 'Cairo'; font-weight: 900; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; backdrop-filter: blur(8px); }
+  .studio-modes-row { max-width: 720px; margin: 0 auto 10px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
+  @media (max-width: 480px) { .studio-modes-row { grid-template-columns: repeat(2, 1fr); } }
+  .studio-mode-btn { padding: 12px 6px; border: 2px solid #2e4a6a; background: rgba(10, 26, 46, 0.9); color: #b8d0e8; border-radius: 12px; font-family: 'Cairo'; font-weight: 900; font-size: 0.72rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; backdrop-filter: blur(8px); }
   .studio-mode-btn:active { transform: scale(0.95); }
   .studio-mode-btn.active { background: linear-gradient(135deg, #00FF00, #00bcd4); color: #0a1a2e; border-color: #00FF00; box-shadow: 0 0 16px #00FF0050; }
   .studio-mode-btn.active.anchor-mode { background: linear-gradient(135deg, #00FF00, #2e7d32); }
   .studio-mode-btn.active.reference-mode { background: linear-gradient(135deg, #9c27b0, #e91e63); color: #fff; border-color: #9c27b0; }
   .studio-mode-btn.active.split-mode { background: linear-gradient(135deg, #00bcd4, #2e7d32); }
+  .studio-mode-btn.active.commentary-mode { background: linear-gradient(135deg, #ff5722, #e91e63); color: #fff; border-color: #ff5722; box-shadow: 0 0 16px #ff572250; }
+  .studio-mode-btn.active.commentary-mode .mode-icon { animation: pulse-commentary 1.5s infinite; }
+  @keyframes pulse-commentary { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
   .studio-mode-btn.disabled { opacity: 0.35; cursor: not-allowed; }
   .studio-mode-btn .mode-icon { font-size: 1.3rem; line-height: 1; }
-  .studio-mode-btn .mode-label { font-size: 0.7rem; }
+  .studio-mode-btn .mode-label { font-size: 0.68rem; }
   .studio-actions-row { max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .studio-action-btn { padding: 16px; border: none; border-radius: 14px; font-family: 'Cairo'; font-weight: 900; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.15s; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
   .studio-action-btn:active { transform: scale(0.96); }
@@ -174,107 +187,24 @@
   .studio-mini-music.show { display: flex; }
   .studio-mini-music.playing { background: rgba(0,255,0,0.95); border-color: #00FF00; color: #0a1a2e; box-shadow: 0 4px 20px rgba(0,255,0,0.5); animation: pulseMusic 1.5s infinite; }
   @keyframes pulseMusic { 0%, 100% { box-shadow: 0 4px 20px rgba(0,255,0,0.5), 0 0 0 0 rgba(0,255,0,0.6); } 50% { box-shadow: 0 4px 20px rgba(0,255,0,0.5), 0 0 0 12px rgba(0,255,0,0); } }
-
-  /* ================================================================
-     ✨ جديد: طبقة التلقين (التليبرومبتر) — تظهر للمستخدم فقط ولا تُسجَّل
-     ================================================================ */
-  .teleprompter-overlay {
-    position: absolute;
-    left: 50%;
-    bottom: 120px;
-    transform: translateX(-50%);
-    width: min(94%, 1100px);
-    height: min(42vh, 420px);
-    background: rgba(0, 0, 0, 0.78);
-    border-radius: 14px;
-    border: 2px solid rgba(255, 152, 0, 0.55);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,152,0,0.15);
-    overflow: hidden;
-    z-index: 9;
-    display: none;
-    backdrop-filter: blur(5px);
-    pointer-events: auto;
-  }
+  .teleprompter-overlay { position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%); width: min(94%, 1100px); height: min(42vh, 420px); background: rgba(0, 0, 0, 0.78); border-radius: 14px; border: 2px solid rgba(255, 152, 0, 0.55); box-shadow: 0 8px 32px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,152,0,0.15); overflow: hidden; z-index: 9; display: none; backdrop-filter: blur(5px); pointer-events: auto; }
   .teleprompter-overlay.show { display: block; }
-  .teleprompter-overlay.no-bg {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
+  .teleprompter-overlay.no-bg { background: transparent; border-color: transparent; box-shadow: none; backdrop-filter: none; }
   .teleprompter-overlay.mirror .teleprompter-content { transform: scaleX(-1); }
-  .teleprompter-scroll {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
-  }
+  .teleprompter-scroll { height: 100%; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; touch-action: pan-y; overscroll-behavior: contain; }
   .teleprompter-scroll::-webkit-scrollbar { display: none; }
-  .teleprompter-content {
-    color: #fff;
-    font-family: 'Cairo', Tahoma, sans-serif;
-    font-weight: 700;
-    line-height: 1.7;
-    text-align: center;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    text-shadow: 0 2px 10px rgba(0,0,0,1), 0 0 18px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,1);
-    padding: 0 26px;
-    transition: font-size 0.15s;
-  }
-  .studio-mini-prompter {
-    position: absolute;
-    top: 180px;
-    right: 16px;
-    background: rgba(255, 152, 0, 0.95);
-    color: #0a1a2e;
-    border: 2px solid #ff9800;
-    border-radius: 30px;
-    padding: 10px 16px;
-    font-family: 'Cairo';
-    font-weight: 900;
-    font-size: 0.85rem;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    z-index: 15;
-    display: none;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 20px rgba(255,152,0,0.5);
-  }
+  .teleprompter-content { color: #fff; font-family: 'Cairo', Tahoma, sans-serif; font-weight: 700; line-height: 1.7; text-align: center; white-space: pre-wrap; word-wrap: break-word; text-shadow: 0 2px 10px rgba(0,0,0,1), 0 0 18px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,1); padding: 0 26px; transition: font-size 0.15s; }
+  .studio-mini-prompter { position: absolute; top: 180px; right: 16px; background: rgba(255, 152, 0, 0.95); color: #0a1a2e; border: 2px solid #ff9800; border-radius: 30px; padding: 10px 16px; font-family: 'Cairo'; font-weight: 900; font-size: 0.85rem; cursor: pointer; backdrop-filter: blur(8px); z-index: 15; display: none; align-items: center; gap: 6px; box-shadow: 0 4px 20px rgba(255,152,0,0.5); }
   .studio-mini-prompter.show { display: flex; }
   .studio-mini-prompter.off { background: rgba(80, 80, 80, 0.9); border-color: #666; color: #ddd; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-  .studio-prompter-controls {
-    position: absolute;
-    top: 232px;
-    right: 16px;
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    z-index: 15;
-  }
+  .studio-prompter-controls { position: absolute; top: 232px; right: 16px; display: none; flex-direction: column; gap: 6px; z-index: 15; }
   .studio-prompter-controls.show { display: flex; }
-  .studio-prompter-controls button {
-    background: rgba(0,0,0,0.85);
-    color: #ff9800;
-    border: 2px solid #ff980066;
-    border-radius: 30px;
-    padding: 8px 14px;
-    font-family: 'Cairo';
-    font-weight: 900;
-    font-size: 0.8rem;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-  }
+  .studio-prompter-controls button { background: rgba(0,0,0,0.85); color: #ff9800; border: 2px solid #ff980066; border-radius: 30px; padding: 8px 14px; font-family: 'Cairo'; font-weight: 900; font-size: 0.8rem; cursor: pointer; backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; gap: 4px; }
   .studio-prompter-controls button:active { transform: scale(0.95); }
+  .duck-meter-wrap { background: #0a1a2a; border: 2px solid #ff5722; border-radius: 12px; padding: 10px; margin-top: 10px; }
+  .duck-meter-bar { height: 10px; background: #1a2f3f; border-radius: 5px; overflow: hidden; position: relative; }
+  .duck-meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #00FF00, #ffc107, #ff5722); transition: width 0.05s linear; }
+  .duck-meter-threshold { position: absolute; top: -3px; bottom: -3px; width: 3px; background: #fff; box-shadow: 0 0 6px #fff; border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -287,6 +217,7 @@
     <div class="indicator" id="indRef">🎞️ المرجعي</div>
     <div class="indicator" id="indMusic">🎵 الموسيقى</div>
     <div class="indicator" id="indPrompter">📖 التلقين</div>
+    <div class="indicator" id="indCommentary">🎙️ التعليق</div>
     <div class="indicator" id="indRec">🔴 التسجيل</div>
   </div>
 
@@ -344,9 +275,6 @@
     </div>
   </div>
 
-  <!-- ================================================================
-       ✨ جديد: قسم التلقين (التليبرومبتر)
-       ================================================================ -->
   <div class="step" style="border-color:#ff9800;">
     <div class="step-title"><span class="num" style="background:#ff9800;color:#0a1a2e;">📖</span><span style="color:#ff9800;">نص التلقين (تقريرك)</span></div>
     <div class="hint" style="background:#ff980010; border-right-color:#ff9800; color:#ff9800; line-height:1.7;">
@@ -461,6 +389,51 @@
     <div class="segments-log" id="segmentsLog"><div style="text-align:center; color:#5a7a9a; padding:10px; font-size:0.8rem;">لم يبدأ التسجيل بعد...</div></div>
   </div>
 
+  <div class="step" style="border-color:#ff5722;">
+    <div class="step-title"><span class="num" style="background:#ff5722;color:#fff;">🎙️</span><span style="color:#ff5722;">وضع التعليق الذكي</span></div>
+    <div class="hint" style="background:#ff572210; border-right-color:#ff5722; color:#ff5722; line-height:1.7;">
+      💡 في <b>وضع التعليق</b>: أنت في النصف العلوي، والفيديو في النصف السفلي.<br>
+      🧠 <b>الخفض الذكي</b>: عندما تتكلم، ينخفض صوت الفيديو تلقائياً. عند صمتك، يعود الصوت تدريجياً.
+    </div>
+
+    <div class="switch-row" style="margin-top:10px;">
+      <div class="label-text"><b>🧠 الخفض الذكي للصوت</b>خفض صوت الفيديو تلقائياً عند تحدثك</div>
+      <label class="switch red"><input type="checkbox" id="optSmartDuck" checked><span class="slider"></span></label>
+    </div>
+    <div class="switch-row">
+      <div class="label-text"><b>🎬 مقدمة صوتية</b>وقت للتكلم قبل بدء الفيديو المشاهد</div>
+      <label class="switch red"><input type="checkbox" id="optIntroEnabled"><span class="slider"></span></label>
+    </div>
+
+    <div style="margin-top:12px;">
+      <label style="display:flex; justify-content:space-between; align-items:center;"><span>⏱️ مدة المقدمة</span><span id="introDurationVal" style="color:#ff5722; font-weight:900;">5 ثوان</span></label>
+      <input type="range" id="introDuration" class="volume-slider" min="0" max="30" value="5" step="1">
+    </div>
+    <div style="margin-top:12px;">
+      <label style="display:flex; justify-content:space-between; align-items:center;"><span>🎚️ مستوى خفض صوت الفيديو عند كلامك</span><span id="duckLevelVal" style="color:#ff5722; font-weight:900;">15%</span></label>
+      <input type="range" id="duckLevel" class="volume-slider" min="0" max="80" value="15" step="5">
+    </div>
+    <div style="margin-top:12px;">
+      <label style="display:flex; justify-content:space-between; align-items:center;"><span>🎤 حساسية كشف الصوت</span><span id="duckThresholdVal" style="color:#ff5722; font-weight:900;">12</span></label>
+      <input type="range" id="duckThreshold" class="volume-slider" min="3" max="40" value="12" step="1">
+    </div>
+    <div style="margin-top:12px;">
+      <label style="display:flex; justify-content:space-between; align-items:center;"><span>⏳ تأخير استعادة الصوت بعد صمتك</span><span id="duckReleaseVal" style="color:#ff5722; font-weight:900;">400ms</span></label>
+      <input type="range" id="duckRelease" class="volume-slider" min="100" max="2000" value="400" step="50">
+    </div>
+
+    <div class="duck-meter-wrap">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="color:#ff5722; font-size:0.85rem; font-weight:900;">🎙️ مستوى صوتك الآن</span>
+        <span id="voiceStatus" style="color:#5a7a9a; font-size:0.75rem; font-weight:900;">غير نشط</span>
+      </div>
+      <div class="duck-meter-bar">
+        <div class="duck-meter-fill" id="voiceMeter"></div>
+        <div class="duck-meter-threshold" id="voiceThresholdLine"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="step">
     <div class="step-title"><span class="num">6</span> التسجيل</div>
     <button class="big-btn btn-green" id="btnStart" disabled>▶️ ابدأ التسجيل الاحترافي</button>
@@ -492,6 +465,7 @@
       <button class="studio-mode-btn active anchor-mode" id="modeAnchor"><span class="mode-icon">👤</span><span class="mode-label">المذيع</span></button>
       <button class="studio-mode-btn reference-mode disabled" id="modeRef"><span class="mode-icon">🎞️</span><span class="mode-label">المرجعي + أنت</span></button>
       <button class="studio-mode-btn split-mode disabled" id="modeSplit"><span class="mode-icon">⚖️</span><span class="mode-label">مقسوم</span></button>
+      <button class="studio-mode-btn commentary-mode disabled" id="modeCommentary"><span class="mode-icon">🎙️</span><span class="mode-label">التعليق</span></button>
     </div>
     <div class="studio-actions-row">
       <button class="studio-action-btn studio-action-pause" id="studioPauseBtn">⏸️ إيقاف مؤقت</button>
@@ -500,9 +474,6 @@
     </div>
   </div>
 
-  <!-- ================================================================
-       ✨ جديد: طبقة التلقين (فوق المعاينة، خارج الكانفس = لا تُسجَّل)
-       ================================================================ -->
   <div class="teleprompter-overlay" id="teleprompterOverlay">
     <div class="teleprompter-scroll" id="teleprompterScroll">
       <div class="teleprompter-content" id="teleprompterContent"></div>
@@ -512,7 +483,7 @@
 
 <script>
 // ============================================================
-//  استوديو الأخبار الاحترافي - النسخة النهائية + التلقين
+//  استوديو الأخبار الاحترافي - النسخة النهائية + التعليق الذكي
 // ============================================================
 
 const canvas = document.createElement('canvas');
@@ -566,9 +537,22 @@ let refTrimStart = 0, refTrimEnd = 0;
 let mainPreviewing = false, refPreviewing = false;
 let isDraggingHandle = null;
 
-// ============================================================
-// ✨ حالة التلقين (التليبرومبتر)
-// ============================================================
+// ✨ نظام التعليق الذكي
+let smartDuckingEnabled = true;
+let duckLevelWhenSpeaking = 0.15;
+let voiceThreshold = 12;
+let voiceReleaseDelay = 400;
+let introEnabled = false;
+let introDuration = 5;
+let refDuckNode = null;
+let micAnalyser = null;
+let micDataArray = null;
+let lastVoiceTime = 0;
+let currentVoiceLevel = 0;
+let introTimerId = null;
+let isIntroActive = false;
+
+// ✨ حالة التلقين
 let prompterEnabled = true;
 let prompterSizeValue = 38;
 let prompterSpeedValue = 30;
@@ -615,11 +599,11 @@ const studioTapHint = $('studioTapHint');
 const modeAnchor = $('modeAnchor');
 const modeRef = $('modeRef');
 const modeSplit = $('modeSplit');
+const modeCommentary = $('modeCommentary');
 const studioPauseBtn = $('studioPauseBtn');
 const studioResumeBtn = $('studioResumeBtn');
 const studioStopBtn = $('studioStopBtn');
 
-// ✨ عناصر التلقين
 const prompterOverlay = $('teleprompterOverlay');
 const prompterScroll = $('teleprompterScroll');
 const prompterContent = $('teleprompterContent');
@@ -668,7 +652,6 @@ function updatePrompterStyle() {
 function updatePrompterPadding() {
   const h = prompterScroll.clientHeight;
   if (h <= 0) return;
-  // مسافة علوية تسمح للنص بالظهور من أسفل، وسفلية تسمح له بالمرور لأعلى
   prompterContent.style.paddingTop = Math.floor(h * 0.55) + 'px';
   prompterContent.style.paddingBottom = Math.floor(h * 1.0) + 'px';
 }
@@ -683,7 +666,6 @@ function updatePrompterVisibility() {
     updatePrompterStyle();
     requestAnimationFrame(updatePrompterPadding);
   }
-  // زر الإظهار/الإخفاء
   if (isRecording && prompterEnabled && hasText) {
     studioMiniPrompter.classList.add('show');
     studioMiniPrompter.classList.toggle('off', !prompterVisible);
@@ -698,7 +680,6 @@ function resetPrompterScroll() {
   prompterScroll.scrollTop = 0;
   prompterAutoScroll = true;
   prompterLastTs = 0;
-  // تهيئة الترتيب بعد ظهور الطبقة
   requestAnimationFrame(() => {
     updatePrompterPadding();
     prompterScroll.scrollTop = 0;
@@ -711,7 +692,7 @@ function animatePrompter(ts) {
   if (!prompterLastTs) { prompterLastTs = ts; return; }
   const dt = Math.min(0.1, (ts - prompterLastTs) / 1000);
   prompterLastTs = ts;
-  const speed = prompterSpeedValue * 2; // px/sec
+  const speed = prompterSpeedValue * 2;
   prompterScroll.scrollTop += speed * dt;
   const maxScroll = prompterScroll.scrollHeight - prompterScroll.clientHeight;
   if (prompterScroll.scrollTop >= maxScroll - 1) {
@@ -720,7 +701,6 @@ function animatePrompter(ts) {
   }
 }
 
-// مستمعات التلقين
 prompterText.addEventListener('input', () => {
   updatePrompterContent();
   updateIndicators();
@@ -780,7 +760,6 @@ $('studioPrompterFaster').addEventListener('click', e => {
   scheduleStudioHide();
 });
 
-// تمرير يدوي يوقف التمرير التلقائي مؤقتاً
 prompterScroll.addEventListener('wheel', () => { prompterAutoScroll = false; }, { passive: true });
 prompterScroll.addEventListener('touchstart', () => { prompterAutoScroll = false; }, { passive: true });
 prompterScroll.addEventListener('mousedown', () => { prompterAutoScroll = false; });
@@ -1016,6 +995,8 @@ function ensureAudio() {
     mainVolNode.gain.value = mainVolValue;
     refVolNode = audioCtx.createGain();
     refVolNode.gain.value = refVolValue;
+    refDuckNode = audioCtx.createGain();
+    refDuckNode.gain.value = 1.0;
     gainMain.gain.value = 1; gainMic.gain.value = 1; gainRef.gain.value = 1;
     refLimiter = audioCtx.createDynamicsCompressor();
     refLimiter.threshold.value = -3; refLimiter.ratio.value = 20;
@@ -1030,7 +1011,8 @@ function ensureAudio() {
     mainVolNode.connect(audioDest);
     mainVolNode.connect(audioCtx.destination);
     gainRef.connect(refVolNode);
-    refVolNode.connect(refLimiter);
+    refVolNode.connect(refDuckNode);
+    refDuckNode.connect(refLimiter);
     refLimiter.connect(audioDest);
     refLimiter.connect(audioCtx.destination);
     musicGainNode.connect(musicLimiter);
@@ -1051,6 +1033,13 @@ function connectMic() {
     if (micNode) { try { micNode.disconnect(); } catch (e) {} }
     micNode = audioCtx.createMediaStreamSource(cameraStream);
     micNode.connect(gainMic);
+    if (!micAnalyser) {
+      micAnalyser = audioCtx.createAnalyser();
+      micAnalyser.fftSize = 512;
+      micAnalyser.smoothingTimeConstant = 0.55;
+      micDataArray = new Uint8Array(micAnalyser.fftSize);
+    }
+    try { micNode.connect(micAnalyser); } catch(e) {}
     return true;
   } catch (e) { return false; }
 }
@@ -1059,14 +1048,15 @@ function applyMix() {
   if (!audioCtx) return;
   const t = audioCtx.currentTime;
   const muted = isPaused;
-  const refPlaying = (layoutMode === 'reference' || layoutMode === 'split' || refPreviewing);
+  const refPlaying = (layoutMode === 'reference' || layoutMode === 'split' || layoutMode === 'commentary' || refPreviewing);
   let duckFactor = 1.0;
   if (optAudioDuck) {
     if (layoutMode === 'reference') duckFactor = 0.15;
     else if (layoutMode === 'split') duckFactor = 0.5;
   }
   const mainOn = (!muted && activeSource === 'file' && (layoutMode === 'anchor' || mainPreviewing)) ? 1 : 0;
-  const micOn = (!muted && activeSource === 'camera') ? duckFactor : 0;
+  const micOn2 = (!muted && activeSource === 'camera' && layoutMode === 'commentary' && smartDuckingEnabled) ? 1 : 0;
+  const micOn = (!muted && activeSource === 'camera' && (!smartDuckingEnabled || layoutMode !== 'commentary')) ? duckFactor : micOn2;
   const refOn = (!muted && refPlaying) ? 1 : 0;
   const musicOn = (!muted && musicPlaying && musicLoaded) ? 1 : 0;
   if (gainMain) gainMain.gain.setTargetAtTime(mainOn, t, 0.05);
@@ -1280,13 +1270,14 @@ $('refFile').addEventListener('change', e => {
     connectRef(); applyMix();
     modeRef.classList.remove('disabled');
     modeSplit.classList.remove('disabled');
+    modeCommentary.classList.remove('disabled');
     setStatus('ok', '✅ الفيديو المرجعي جاهز! المدة: ' + fmtTime(refVideo.duration));
   };
 });
 
 function setLayout(mode) {
   if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; }
-  if (mode === 'reference' && !refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; }
+  if ((mode === 'reference' || mode === 'commentary' || mode === 'split') && !refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; }
   targetLayoutMode = mode;
   if (optShowTransition) transitionProgress = 1.0;
   else { transitionProgress = 0; applyLayoutNow(mode); }
@@ -1295,7 +1286,8 @@ function setLayout(mode) {
 
 function applyLayoutNow(mode) {
   layoutMode = mode;
-  if (mode === 'reference' || mode === 'split') {
+  const showRef = (mode === 'reference' || mode === 'split' || mode === 'commentary');
+  if (showRef) {
     if (refLoaded) {
       if (!refVideo._hasStarted || refVideo.currentTime < refTrimStart - 0.1) {
         refVideo.currentTime = refTrimStart;
@@ -1303,7 +1295,7 @@ function applyLayoutNow(mode) {
       }
       refVideo.play().catch(()=>{});
     }
-    if (activeSource === 'file') video.pause();
+    if (activeSource === 'file' && mode !== 'commentary') video.pause();
   } else {
     if (refLoaded) { refVideo.pause(); refVideo._hasStarted = false; }
     if (activeSource === 'file' && isRecording && !isPaused) {
@@ -1316,10 +1308,11 @@ function applyLayoutNow(mode) {
 }
 
 function updateStudioUI() {
-  [modeAnchor, modeRef, modeSplit].forEach(b => b.classList.remove('active'));
+  [modeAnchor, modeRef, modeSplit, modeCommentary].forEach(b => b.classList.remove('active'));
   if (layoutMode === 'anchor') modeAnchor.classList.add('active');
   else if (layoutMode === 'reference') modeRef.classList.add('active');
   else if (layoutMode === 'split') modeSplit.classList.add('active');
+  else if (layoutMode === 'commentary') modeCommentary.classList.add('active');
   if (isRecording && layoutMode === 'anchor' && refLoaded) studioMiniRef.classList.add('show');
   else studioMiniRef.classList.remove('show');
   if (isRecording && musicLoaded) studioMiniMusic.classList.add('show');
@@ -1332,18 +1325,26 @@ function updateStudioUI() {
     studioLiveBadge.className = 'studio-live-badge';
     if (layoutMode === 'reference') studioLiveBadge.textContent = '🎞️ عرض المرجعي';
     else if (layoutMode === 'split') studioLiveBadge.textContent = '⚖️ مقسوم';
+    else if (layoutMode === 'commentary') studioLiveBadge.textContent = '🎙️ تعليق مباشر';
     else studioLiveBadge.textContent = '🔴 بث مباشر';
     studioTimer.classList.remove('paused');
   }
   modeRef.classList.toggle('disabled', !refLoaded);
   modeSplit.classList.toggle('disabled', !refLoaded);
-  // تحديث زر التلقين
+  modeCommentary.classList.toggle('disabled', !refLoaded);
+  // مؤشر التعليق
+  const cInd = $('indCommentary');
+  if (cInd) {
+    cInd.className = 'indicator' + (layoutMode === 'commentary' ? ' commentary-on' : '');
+    cInd.textContent = layoutMode === 'commentary' ? '🎙️ تعليق نشط' : '🎙️ التعليق';
+  }
   updatePrompterVisibility();
 }
 
 modeAnchor.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } setLayout('anchor'); });
 modeRef.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('reference'); });
 modeSplit.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('split'); });
+modeCommentary.addEventListener('click', (e) => { e.stopPropagation(); if (!isRecording) { setStatus('err', '⚠️ ابدأ التسجيل أولاً'); return; } if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('commentary'); });
 studioMiniRef.addEventListener('click', (e) => { e.stopPropagation(); if (!refLoaded) { setStatus('err', '⚠️ ارفع الفيديو المرجعي أولاً'); return; } setLayout('reference'); });
 
 $('btnStart').addEventListener('click', startRecording);
@@ -1351,6 +1352,48 @@ $('btnStop').addEventListener('click', stopRecording);
 studioStopBtn.addEventListener('click', stopRecording);
 studioPauseBtn.addEventListener('click', togglePause);
 studioResumeBtn.addEventListener('click', togglePause);
+
+function startIntroCountdown() {
+  isIntroActive = true;
+  let remaining = introDuration;
+  const badge = $('studioLiveBadge');
+  const updateBadge = () => {
+    badge.className = 'studio-live-badge';
+    badge.textContent = `🎙️ مقدمة: ${remaining}s`;
+    badge.style.color = '#ff9800';
+    badge.style.borderColor = '#ff980080';
+  };
+  updateBadge();
+  setStatus('busy', `🎙️ تحدث الآن — الفيديو سيبدأ بعد ${remaining} ثانية`);
+  introTimerId = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(introTimerId);
+      introTimerId = null;
+      isIntroActive = false;
+      badge.style.color = '';
+      badge.style.borderColor = '';
+      if (isRecording && !isPaused && refLoaded) {
+        setLayout('commentary');
+        setStatus('busy', '🔴 وضع التعليق نشط — الفيديو يعمل الآن');
+      }
+    } else {
+      updateBadge();
+    }
+  }, 1000);
+}
+
+function cancelIntro() {
+  if (introTimerId) {
+    clearInterval(introTimerId);
+    introTimerId = null;
+    isIntroActive = false;
+    const badge = $('studioLiveBadge');
+    badge.style.color = '';
+    badge.style.borderColor = '';
+    updateStudioUI();
+  }
+}
 
 function startRecording() {
   const ready = (activeSource === 'file') ? videoLoaded : cameraReady;
@@ -1417,7 +1460,12 @@ function startRecording() {
       updatePrompterVisibility();
     }, 200);
     updatePrompterVisibility();
-    setStatus('busy', '<span class="live-dot"></span> التسجيل جارٍ' + (prompterEnabled && prompterText.value.trim() ? ' — اقرأ من التلقين 📖' : (musicLoaded ? ' — اضغط 🎵 لتشغيل الموسيقى' : '')));
+    // ✨ مقدمة صوتية
+    if (introEnabled && refLoaded && activeSource === 'camera') {
+      startIntroCountdown();
+    } else {
+      setStatus('busy', '<span class="live-dot"></span> التسجيل جارٍ' + (prompterEnabled && prompterText.value.trim() ? ' — اقرأ من التلقين 📖' : (musicLoaded ? ' — اضغط 🎵 لتشغيل الموسيقى' : '')));
+    }
   } catch (e) {
     setStatus('err', '⚠️ ' + e.message);
     isRecording = false;
@@ -1468,7 +1516,6 @@ function exitStudio() {
   if (studioControlsHideTimer) clearTimeout(studioControlsHideTimer);
   studioControlsHidden = false;
   studioOverlay.classList.remove('studio-controls-hidden');
-  // إخفاء طبقة التلقين
   prompterOverlay.classList.remove('show');
   studioMiniPrompter.classList.remove('show');
   studioPrompterControls.classList.remove('show');
@@ -1515,7 +1562,7 @@ function resumeRecording() {
   accumulatedPauseTime += Date.now() - pauseStartTime;
   isPaused = false;
   currentSegmentStart = Date.now();
-  if (layoutMode === 'reference' || layoutMode === 'split') { if (refLoaded) refVideo.play().catch(()=>{}); }
+  if (layoutMode === 'reference' || layoutMode === 'split' || layoutMode === 'commentary') { if (refLoaded) refVideo.play().catch(()=>{}); }
   else if (activeSource === 'file') video.play().catch(()=>{});
   if (musicPlaying) musicEl.play().catch(()=>{});
   applyMix();
@@ -1557,6 +1604,7 @@ function updateSegmentsLog() {
 
 function stopRecording() {
   if (!isRecording) return;
+  cancelIntro();
   exitStudio();
   if (isPaused) { const dur = (Date.now() - currentSegmentStart) / 1000; if (dur > 0.5) segments.push({ duration: dur }); }
   isRecording = false; isPaused = false;
@@ -1737,6 +1785,79 @@ function drawThinGoldFrame(W, H, PAD) {
   ctx.fillStyle = shine; ctx.fillRect(0, 0, W, PAD);
 }
 
+function drawCommentaryLayout(W, H, dt) {
+  const halfH = H / 2;
+  // النصف العلوي: أنت (مباشر)
+  if (activeSource === 'camera' && camVideo.readyState >= 2) drawCover(camVideo, 0, 0, W, halfH);
+  else if (video.readyState >= 2) drawCover(video, 0, 0, W, halfH);
+  else drawEmptyState(W, halfH, '📷 الكاميرا غير جاهزة');
+
+  // النصف السفلي: الفيديو المشاهد
+  if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, halfH, W, halfH);
+  else drawEmptyState(W, halfH, '🎞️ الفيديو المشاهد غير جاهز');
+
+  // خط فاصل ذهبي
+  const sepGrad = ctx.createLinearGradient(0, halfH - 2, W, halfH + 2);
+  sepGrad.addColorStop(0, '#B8860B'); sepGrad.addColorStop(0.5, '#FFD700'); sepGrad.addColorStop(1, '#B8860B');
+  ctx.fillStyle = sepGrad;
+  ctx.fillRect(0, halfH - 3, W, 6);
+
+  // شارة "أنت - مباشر"
+  const pulse = (Math.sin(Date.now() / 300) + 1) / 2;
+  ctx.save();
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+  ctx.beginPath(); ctx.roundRect(20, 20, 180, 40, 8); ctx.fill();
+  ctx.strokeStyle = `rgba(255, 71, 87, ${0.7 + pulse * 0.3})`;
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.roundRect(20, 20, 180, 40, 8); ctx.stroke();
+  ctx.fillStyle = `rgba(255, 71, 87, ${0.5 + pulse * 0.5})`;
+  ctx.beginPath(); ctx.arc(45, 40, 8, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 17px Cairo, sans-serif';
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  ctx.fillText('أنت — مباشر', 190, 41);
+  ctx.restore();
+
+  // شارة "الفيديو المشاهد"
+  ctx.save();
+  ctx.fillStyle = 'rgba(156, 39, 176, 0.9)';
+  ctx.beginPath(); ctx.roundRect(20, halfH + 16, 200, 38, 8); ctx.fill();
+  ctx.strokeStyle = '#d8b4ff'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.roundRect(20, halfH + 16, 200, 38, 8); ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 16px Cairo, sans-serif';
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  ctx.fillText('🎞️ الفيديو المشاهد', 210, halfH + 36);
+  ctx.restore();
+
+  // مؤشر الخفض الذكي
+  if (smartDuckingEnabled && isRecording) {
+    const speaking = (Date.now() - lastVoiceTime) < voiceReleaseDelay;
+    if (speaking) {
+      ctx.save();
+      ctx.fillStyle = `rgba(255, 71, 87, ${0.85 + pulse * 0.15})`;
+      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.font = '900 15px Cairo, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🎤 صوت الفيديو مخفوض', W - 120, halfH + 36);
+      ctx.restore();
+    } else if (refVideo.readyState >= 2 && !refVideo.paused) {
+      ctx.save();
+      ctx.fillStyle = 'rgba(0, 200, 0, 0.75)';
+      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '900 15px Cairo, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('🔊 صوت الفيديو كامل', W - 120, halfH + 36);
+      ctx.restore();
+    }
+  }
+  canvas._pipBounds = null;
+}
+
 function redraw(dt) {
   const W = canvas.width, H = canvas.height;
   if (!W || !H) return;
@@ -1775,6 +1896,8 @@ function redraw(dt) {
       if (activeSource === 'camera' && camVideo.readyState >= 2) drawPiP(camVideo, innerW, innerH);
       else if (video.readyState >= 2) drawPiP(video, innerW, innerH);
       else canvas._pipBounds = null;
+    } else if (layoutMode === 'commentary') {
+      drawCommentaryLayout(innerW, innerH, dt);
     } else if (layoutMode === 'split') {
       const halfW = innerW / 2;
       if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, 0, halfW, innerH);
@@ -1803,12 +1926,70 @@ document.addEventListener('keydown', e => {
     case 'a': if (refLoaded) setLayout('anchor'); break;
     case 'r': if (refLoaded) setLayout('reference'); break;
     case 's': if (refLoaded) setLayout('split'); break;
+    case 'c': if (refLoaded) setLayout('commentary'); break;
     case 'm': if (musicLoaded) toggleMusic(); break;
     case 'p': prompterVisible = !prompterVisible; updatePrompterVisibility(); break;
     case ' ': e.preventDefault(); togglePause(); break;
   }
   scheduleStudioHide();
 });
+
+function updateVoiceDetection() {
+  const meter = $('voiceMeter');
+  const vStatus = $('voiceStatus');
+  
+  if (!micAnalyser || !micDataArray) {
+    if (meter) meter.style.width = '0%';
+    if (vStatus) { vStatus.textContent = 'لا يوجد ميكروفون'; vStatus.style.color = '#5a7a9a'; }
+    return;
+  }
+  
+  micAnalyser.getByteTimeDomainData(micDataArray);
+  let sum = 0;
+  for (let i = 0; i < micDataArray.length; i++) {
+    const v = (micDataArray[i] - 128) / 128;
+    sum += v * v;
+  }
+  const rms = Math.sqrt(sum / micDataArray.length);
+  currentVoiceLevel = Math.min(100, rms * 280);
+  
+  const now = Date.now();
+  if (currentVoiceLevel > voiceThreshold) {
+    lastVoiceTime = now;
+  }
+  const speaking = (now - lastVoiceTime) < voiceReleaseDelay;
+  
+  if (refDuckNode && audioCtx) {
+    const inCommentary = (layoutMode === 'commentary');
+    const hasMic = cameraStream && cameraStream.getAudioTracks().length > 0;
+    const shouldDuck = smartDuckingEnabled && isRecording && !isPaused && inCommentary && hasMic;
+    
+    if (shouldDuck) {
+      const target = speaking ? duckLevelWhenSpeaking : 1.0;
+      const tc = speaking ? 0.05 : 0.20;
+      refDuckNode.gain.setTargetAtTime(target, audioCtx.currentTime, tc);
+    } else {
+      refDuckNode.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.15);
+    }
+  }
+  
+  if (meter) meter.style.width = Math.min(100, currentVoiceLevel) + '%';
+  if (vStatus) {
+    if (!cameraStream || !cameraStream.getAudioTracks().length) {
+      vStatus.textContent = 'الميكروفون مكتوم';
+      vStatus.style.color = '#5a7a9a';
+    } else if (speaking) {
+      vStatus.textContent = '🎤 تتحدث الآن';
+      vStatus.style.color = '#00FF00';
+    } else if (currentVoiceLevel > voiceThreshold * 0.6) {
+      vStatus.textContent = 'صوت خفيف';
+      vStatus.style.color = '#ffc107';
+    } else {
+      vStatus.textContent = '🤫 صامت';
+      vStatus.style.color = '#5a7a9a';
+    }
+  }
+}
 
 function renderLoop(ts) {
   const dt = lastFrameTime ? Math.min(0.1, (ts - lastFrameTime) / 1000) : 0.033;
@@ -1817,10 +1998,10 @@ function renderLoop(ts) {
   const videoLive = (activeSource === 'file' && videoLoaded && !video.paused && !video.ended);
   const refLive = (refLoaded && !refVideo.paused && !refVideo.ended);
   const hasNews = !!newsText.value.trim();
-  const needsAnim = isRecording || isPaused || layoutMode === 'reference' || transitionProgress > 0 || camLive || videoLive || refLive || hasNews || mainPreviewing || refPreviewing;
+  const needsAnim = isRecording || isPaused || layoutMode === 'reference' || layoutMode === 'commentary' || transitionProgress > 0 || camLive || videoLive || refLive || hasNews || mainPreviewing || refPreviewing;
   if (needsAnim) redraw(dt);
-  // ✨ تحديث التلقين
   animatePrompter(ts);
+  updateVoiceDetection();
   animFrame = requestAnimationFrame(renderLoop);
 }
 
@@ -1866,6 +2047,46 @@ $('refVolSlider').addEventListener('input', e => {
   if (refVolNode && audioCtx) refVolNode.gain.setTargetAtTime(refVolValue, audioCtx.currentTime, 0.05);
 });
 
+// ✨ إعدادات التعليق الذكي
+$('optSmartDuck').addEventListener('change', e => {
+  smartDuckingEnabled = e.target.checked;
+  if (!smartDuckingEnabled && refDuckNode && audioCtx) {
+    refDuckNode.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.15);
+  }
+  applyMix();
+});
+
+$('optIntroEnabled').addEventListener('change', e => {
+  introEnabled = e.target.checked;
+});
+
+$('introDuration').addEventListener('input', e => {
+  introDuration = parseInt(e.target.value);
+  $('introDurationVal').textContent = introDuration + ' ثوان';
+});
+
+$('duckLevel').addEventListener('input', e => {
+  duckLevelWhenSpeaking = parseInt(e.target.value) / 100;
+  $('duckLevelVal').textContent = e.target.value + '%';
+});
+
+$('duckThreshold').addEventListener('input', e => {
+  voiceThreshold = parseInt(e.target.value);
+  $('duckThresholdVal').textContent = voiceThreshold;
+  const line = $('voiceThresholdLine');
+  if (line) line.style.left = Math.min(100, voiceThreshold) + '%';
+});
+
+$('duckRelease').addEventListener('input', e => {
+  voiceReleaseDelay = parseInt(e.target.value);
+  $('duckReleaseVal').textContent = voiceReleaseDelay + 'ms';
+});
+
+setTimeout(() => {
+  const line = $('voiceThresholdLine');
+  if (line) line.style.left = Math.min(100, voiceThreshold) + '%';
+}, 200);
+
 canvas.width = 1280; canvas.height = 720;
 setTimeout(() => {
   const wrap = $('previewWrap');
@@ -1883,7 +2104,8 @@ updatePrompterStyle();
 animFrame = requestAnimationFrame(renderLoop);
 
 console.log('✅ الاستوديو جاهز!');
-console.log('📖 ميزة التلقين مفعّلة — الصق النص في «نص التلقين» وستظهر لك أثناء التسجيل.');
+console.log('📖 ميزة التلقين مفعّلة.');
+console.log('🎙️ وضع التعليق الذكي مفعّل — زر C للتبديل، مع خفض تلقائي لصوت الفيديو عند كلامك.');
 </script>
 </body>
 </html>
