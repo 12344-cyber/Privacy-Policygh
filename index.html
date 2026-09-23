@@ -96,12 +96,6 @@
   #prompterSpeed::-moz-range-thumb { background: #ff9800; box-shadow: 0 0 12px #ff9800; }
   #introDuration::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
   #introDuration::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckLevel::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckLevel::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckThreshold::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckThreshold::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckRelease::-webkit-slider-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
-  #duckRelease::-moz-range-thumb { background: #ff5722; box-shadow: 0 0 12px #ff5722; }
   .trimmer { background: #0a1a2a; border: 2px solid #FFD700; border-radius: 14px; padding: 16px 12px 12px; margin-top: 10px; }
   .trimmer-title { color: #FFD700; font-weight: 900; font-size: 0.9rem; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
   .trimmer-title .trimmer-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; background: #FFD70020; color: #FFD700; border: 1px solid #FFD70050; font-weight: 700; }
@@ -167,8 +161,6 @@
   .studio-mode-btn.active.reference-mode { background: linear-gradient(135deg, #9c27b0, #e91e63); color: #fff; border-color: #9c27b0; }
   .studio-mode-btn.active.split-mode { background: linear-gradient(135deg, #00bcd4, #2e7d32); }
   .studio-mode-btn.active.commentary-mode { background: linear-gradient(135deg, #ff5722, #e91e63); color: #fff; border-color: #ff5722; box-shadow: 0 0 16px #ff572250; }
-  .studio-mode-btn.active.commentary-mode .mode-icon { animation: pulse-commentary 1.5s infinite; }
-  @keyframes pulse-commentary { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
   .studio-mode-btn.disabled { opacity: 0.35; cursor: not-allowed; }
   .studio-mode-btn .mode-icon { font-size: 1.3rem; line-height: 1; }
   .studio-mode-btn .mode-label { font-size: 0.68rem; }
@@ -201,10 +193,6 @@
   .studio-prompter-controls.show { display: flex; }
   .studio-prompter-controls button { background: rgba(0,0,0,0.85); color: #ff9800; border: 2px solid #ff980066; border-radius: 30px; padding: 8px 14px; font-family: 'Cairo'; font-weight: 900; font-size: 0.8rem; cursor: pointer; backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; gap: 4px; }
   .studio-prompter-controls button:active { transform: scale(0.95); }
-  .duck-meter-wrap { background: #0a1a2a; border: 2px solid #ff5722; border-radius: 12px; padding: 10px; margin-top: 10px; }
-  .duck-meter-bar { height: 10px; background: #1a2f3f; border-radius: 5px; overflow: hidden; position: relative; }
-  .duck-meter-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #00FF00, #ffc107, #ff5722); transition: width 0.05s linear; }
-  .duck-meter-threshold { position: absolute; top: -3px; bottom: -3px; width: 3px; background: #fff; box-shadow: 0 0 6px #fff; border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -318,8 +306,8 @@
   </div>
 
   <div class="step" style="border-color:#9c27b0;">
-    <div class="step-title"><span class="num" style="background:#9c27b0;color:#fff;">4</span> <span style="color:#d8b4ff;">الفيديو المرجعي</span></div>
-    <div class="hint" style="background:#9c27b010; border-right-color:#9c27b0; color:#d8b4ff;">💡 سيظهر بأسلوب القنوات الإخبارية مع ظهورك في زاوية صغيرة.</div>
+    <div class="step-title"><span class="num" style="background:#9c27b0;color:#fff;">4</span> <span style="color:#d8b4ff;">الفيديو المرجعي (المشاهد)</span></div>
+    <div class="hint" style="background:#9c27b010; border-right-color:#9c27b0; color:#d8b4ff;">💡 ارفع الفيديو الذي تريد الاستماع إليه والتعليق عليه. سيظهر في وضع التعليق في النصف السفلي.</div>
     <input type="file" id="refFile" accept="video/*" style="margin-top:10px;">
     <div class="ref-box" id="refBox" style="display:none;">
       <div class="ref-header">
@@ -372,7 +360,7 @@
     <div class="step-title"><span class="num" style="background:#00FF00;color:#0a1a2e;">🔊</span><span style="color:#00FF00;">مستويات أصوات الفيديو</span></div>
     <label style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;"><span>📁 صوت الفيديو الرئيسي</span><span id="mainVolVal" style="color:#00FF00; font-weight:900; font-size:1.1rem;">100%</span></label>
     <input type="range" id="mainVol" class="volume-slider" min="0" max="200" value="100" step="5">
-    <label style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;"><span>🎞️ صوت الفيديو المرجعي</span><span id="refVolVal" style="color:#9c27b0; font-weight:900; font-size:1.1rem;">100%</span></label>
+    <label style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;"><span>🎞️ صوت الفيديو المشاهد</span><span id="refVolVal" style="color:#9c27b0; font-weight:900; font-size:1.1rem;">100%</span></label>
     <input type="range" id="refVolSlider" class="volume-slider" min="0" max="200" value="100" step="5">
   </div>
 
@@ -380,8 +368,8 @@
     <div class="step-title"><span class="num">5</span> <span>الإعدادات الذكية</span></div>
     <div class="pause-options" style="border-color:#00FF00;">
       <div class="pause-options-title" style="color:#00FF00;">⚙️ إعدادات احترافية</div>
-      <div class="switch-row"><div class="label-text"><b>🎤 خفض صوتي تلقائياً</b>صوتك ينخفض عندما يتكلم المرجعي</div><label class="switch"><input type="checkbox" id="optAudioDuck" checked><span class="slider"></span></label></div>
-      <div class="switch-row"><div class="label-text"><b>📺 عرض PiP عند المرجعي</b>ظهورك في زاوية صغيرة عند عرض المرجعي</div><label class="switch"><input type="checkbox" id="optShowPiP" checked><span class="slider"></span></label></div>
+      <div class="switch-row"><div class="label-text"><b>🎤 خفض صوتي تلقائياً</b>صوتك ينخفض عندما يتكلم المشاهد (وضع المرجعي/المقسوم)</div><label class="switch"><input type="checkbox" id="optAudioDuck" checked><span class="slider"></span></label></div>
+      <div class="switch-row"><div class="label-text"><b>📺 عرض PiP عند المشاهد</b>ظهورك في زاوية صغيرة عند عرض المشاهد</div><label class="switch"><input type="checkbox" id="optShowPiP" checked><span class="slider"></span></label></div>
       <div class="switch-row"><div class="label-text"><b>🔁 تكرار المقطع المحدد</b>إعادة المقطع تلقائياً عند انتهائه</div><label class="switch"><input type="checkbox" id="optLoopClip" checked><span class="slider"></span></label></div>
       <div class="switch-row"><div class="label-text"><b>🎬 شاشة انتقالية عند الإيقاف</b>عرض انتقال بين المواقع</div><label class="switch"><input type="checkbox" id="optShowTransition" checked><span class="slider"></span></label></div>
     </div>
@@ -390,17 +378,15 @@
   </div>
 
   <div class="step" style="border-color:#ff5722;">
-    <div class="step-title"><span class="num" style="background:#ff5722;color:#fff;">🎙️</span><span style="color:#ff5722;">وضع التعليق الذكي</span></div>
+    <div class="step-title"><span class="num" style="background:#ff5722;color:#fff;">🎙️</span><span style="color:#ff5722;">وضع التعليق (المحلل)</span></div>
     <div class="hint" style="background:#ff572210; border-right-color:#ff5722; color:#ff5722; line-height:1.7;">
-      💡 في <b>وضع التعليق</b>: أنت في النصف العلوي، والفيديو في النصف السفلي.<br>
-      🧠 <b>الخفض الذكي</b>: عندما تتكلم، ينخفض صوت الفيديو تلقائياً. عند صمتك، يعود الصوت تدريجياً.
+      🎙️ أسلوب المحللين — كاستوديوهات الجزيرة:<br>
+      👤 <b>النصف العلوي</b>: أنت مباشر (كاميرا)<br>
+      🎞️ <b>النصف السفلي</b>: الفيديو الذي تستمع إليه<br>
+      💡 اسحب مستوى صوت المشاهد من الإعدادات أعلاه لضبط توازن الصوت يدوياً.
     </div>
 
     <div class="switch-row" style="margin-top:10px;">
-      <div class="label-text"><b>🧠 الخفض الذكي للصوت</b>خفض صوت الفيديو تلقائياً عند تحدثك</div>
-      <label class="switch red"><input type="checkbox" id="optSmartDuck" checked><span class="slider"></span></label>
-    </div>
-    <div class="switch-row">
       <div class="label-text"><b>🎬 مقدمة صوتية</b>وقت للتكلم قبل بدء الفيديو المشاهد</div>
       <label class="switch red"><input type="checkbox" id="optIntroEnabled"><span class="slider"></span></label>
     </div>
@@ -408,29 +394,6 @@
     <div style="margin-top:12px;">
       <label style="display:flex; justify-content:space-between; align-items:center;"><span>⏱️ مدة المقدمة</span><span id="introDurationVal" style="color:#ff5722; font-weight:900;">5 ثوان</span></label>
       <input type="range" id="introDuration" class="volume-slider" min="0" max="30" value="5" step="1">
-    </div>
-    <div style="margin-top:12px;">
-      <label style="display:flex; justify-content:space-between; align-items:center;"><span>🎚️ مستوى خفض صوت الفيديو عند كلامك</span><span id="duckLevelVal" style="color:#ff5722; font-weight:900;">15%</span></label>
-      <input type="range" id="duckLevel" class="volume-slider" min="0" max="80" value="15" step="5">
-    </div>
-    <div style="margin-top:12px;">
-      <label style="display:flex; justify-content:space-between; align-items:center;"><span>🎤 حساسية كشف الصوت</span><span id="duckThresholdVal" style="color:#ff5722; font-weight:900;">12</span></label>
-      <input type="range" id="duckThreshold" class="volume-slider" min="3" max="40" value="12" step="1">
-    </div>
-    <div style="margin-top:12px;">
-      <label style="display:flex; justify-content:space-between; align-items:center;"><span>⏳ تأخير استعادة الصوت بعد صمتك</span><span id="duckReleaseVal" style="color:#ff5722; font-weight:900;">400ms</span></label>
-      <input type="range" id="duckRelease" class="volume-slider" min="100" max="2000" value="400" step="50">
-    </div>
-
-    <div class="duck-meter-wrap">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-        <span style="color:#ff5722; font-size:0.85rem; font-weight:900;">🎙️ مستوى صوتك الآن</span>
-        <span id="voiceStatus" style="color:#5a7a9a; font-size:0.75rem; font-weight:900;">غير نشط</span>
-      </div>
-      <div class="duck-meter-bar">
-        <div class="duck-meter-fill" id="voiceMeter"></div>
-        <div class="duck-meter-threshold" id="voiceThresholdLine"></div>
-      </div>
     </div>
   </div>
 
@@ -451,7 +414,7 @@
     <div class="studio-live-badge" id="studioLiveBadge">🔴 بث مباشر</div>
   </div>
   <div class="studio-tap-hint" id="studioTapHint">💡 المس الشاشة لإظهار/إخفاء الأزرار</div>
-  <button class="studio-mini-ref" id="studioMiniRef">🎞️ عرض المرجعي</button>
+  <button class="studio-mini-ref" id="studioMiniRef">🎞️ عرض المشاهد</button>
   <button class="studio-mini-music" id="studioMiniMusic">🎵 تشغيل الموسيقى</button>
   <button class="studio-mini-prompter" id="studioMiniPrompter">📖 إخفاء التلقين</button>
   <div class="studio-prompter-controls" id="studioPrompterControls">
@@ -463,7 +426,7 @@
   <div class="studio-bottom-bar">
     <div class="studio-modes-row">
       <button class="studio-mode-btn active anchor-mode" id="modeAnchor"><span class="mode-icon">👤</span><span class="mode-label">المذيع</span></button>
-      <button class="studio-mode-btn reference-mode disabled" id="modeRef"><span class="mode-icon">🎞️</span><span class="mode-label">المرجعي + أنت</span></button>
+      <button class="studio-mode-btn reference-mode disabled" id="modeRef"><span class="mode-icon">🎞️</span><span class="mode-label">المشاهد + أنت</span></button>
       <button class="studio-mode-btn split-mode disabled" id="modeSplit"><span class="mode-icon">⚖️</span><span class="mode-label">مقسوم</span></button>
       <button class="studio-mode-btn commentary-mode disabled" id="modeCommentary"><span class="mode-icon">🎙️</span><span class="mode-label">التعليق</span></button>
     </div>
@@ -483,7 +446,7 @@
 
 <script>
 // ============================================================
-//  استوديو الأخبار الاحترافي - النسخة النهائية + التعليق الذكي
+//  استوديو الأخبار الاحترافي - نسخة محلل القنوات
 // ============================================================
 
 const canvas = document.createElement('canvas');
@@ -537,22 +500,13 @@ let refTrimStart = 0, refTrimEnd = 0;
 let mainPreviewing = false, refPreviewing = false;
 let isDraggingHandle = null;
 
-// ✨ نظام التعليق الذكي
-let smartDuckingEnabled = true;
-let duckLevelWhenSpeaking = 0.15;
-let voiceThreshold = 12;
-let voiceReleaseDelay = 400;
+// مقدمة صوتية
 let introEnabled = false;
 let introDuration = 5;
-let refDuckNode = null;
-let micAnalyser = null;
-let micDataArray = null;
-let lastVoiceTime = 0;
-let currentVoiceLevel = 0;
 let introTimerId = null;
 let isIntroActive = false;
 
-// ✨ حالة التلقين
+// التلقين
 let prompterEnabled = true;
 let prompterSizeValue = 38;
 let prompterSpeedValue = 30;
@@ -640,7 +594,7 @@ function fmtPrecise(s) {
 }
 
 // ============================================================
-// ✨ دوال التلقين
+// دوال التلقين
 // ============================================================
 function updatePrompterContent() {
   const txt = prompterText.value.trim();
@@ -995,8 +949,6 @@ function ensureAudio() {
     mainVolNode.gain.value = mainVolValue;
     refVolNode = audioCtx.createGain();
     refVolNode.gain.value = refVolValue;
-    refDuckNode = audioCtx.createGain();
-    refDuckNode.gain.value = 1.0;
     gainMain.gain.value = 1; gainMic.gain.value = 1; gainRef.gain.value = 1;
     refLimiter = audioCtx.createDynamicsCompressor();
     refLimiter.threshold.value = -3; refLimiter.ratio.value = 20;
@@ -1011,8 +963,7 @@ function ensureAudio() {
     mainVolNode.connect(audioDest);
     mainVolNode.connect(audioCtx.destination);
     gainRef.connect(refVolNode);
-    refVolNode.connect(refDuckNode);
-    refDuckNode.connect(refLimiter);
+    refVolNode.connect(refLimiter);
     refLimiter.connect(audioDest);
     refLimiter.connect(audioCtx.destination);
     musicGainNode.connect(musicLimiter);
@@ -1033,13 +984,6 @@ function connectMic() {
     if (micNode) { try { micNode.disconnect(); } catch (e) {} }
     micNode = audioCtx.createMediaStreamSource(cameraStream);
     micNode.connect(gainMic);
-    if (!micAnalyser) {
-      micAnalyser = audioCtx.createAnalyser();
-      micAnalyser.fftSize = 512;
-      micAnalyser.smoothingTimeConstant = 0.55;
-      micDataArray = new Uint8Array(micAnalyser.fftSize);
-    }
-    try { micNode.connect(micAnalyser); } catch(e) {}
     return true;
   } catch (e) { return false; }
 }
@@ -1055,8 +999,7 @@ function applyMix() {
     else if (layoutMode === 'split') duckFactor = 0.5;
   }
   const mainOn = (!muted && activeSource === 'file' && (layoutMode === 'anchor' || mainPreviewing)) ? 1 : 0;
-  const micOn2 = (!muted && activeSource === 'camera' && layoutMode === 'commentary' && smartDuckingEnabled) ? 1 : 0;
-  const micOn = (!muted && activeSource === 'camera' && (!smartDuckingEnabled || layoutMode !== 'commentary')) ? duckFactor : micOn2;
+  const micOn = (!muted && activeSource === 'camera') ? duckFactor : 0;
   const refOn = (!muted && refPlaying) ? 1 : 0;
   const musicOn = (!muted && musicPlaying && musicLoaded) ? 1 : 0;
   if (gainMain) gainMain.gain.setTargetAtTime(mainOn, t, 0.05);
@@ -1323,7 +1266,7 @@ function updateStudioUI() {
     studioTimer.classList.add('paused');
   } else {
     studioLiveBadge.className = 'studio-live-badge';
-    if (layoutMode === 'reference') studioLiveBadge.textContent = '🎞️ عرض المرجعي';
+    if (layoutMode === 'reference') studioLiveBadge.textContent = '🎞️ عرض المشاهد';
     else if (layoutMode === 'split') studioLiveBadge.textContent = '⚖️ مقسوم';
     else if (layoutMode === 'commentary') studioLiveBadge.textContent = '🎙️ تعليق مباشر';
     else studioLiveBadge.textContent = '🔴 بث مباشر';
@@ -1332,7 +1275,6 @@ function updateStudioUI() {
   modeRef.classList.toggle('disabled', !refLoaded);
   modeSplit.classList.toggle('disabled', !refLoaded);
   modeCommentary.classList.toggle('disabled', !refLoaded);
-  // مؤشر التعليق
   const cInd = $('indCommentary');
   if (cInd) {
     cInd.className = 'indicator' + (layoutMode === 'commentary' ? ' commentary-on' : '');
@@ -1450,7 +1392,6 @@ function startRecording() {
     musicPlaying = false;
     updateMusicUI();
     applyMix();
-    // ✨ تهيئة التلقين
     prompterVisible = true;
     prompterAutoScroll = true;
     prompterInitialized = false;
@@ -1460,7 +1401,6 @@ function startRecording() {
       updatePrompterVisibility();
     }, 200);
     updatePrompterVisibility();
-    // ✨ مقدمة صوتية
     if (introEnabled && refLoaded && activeSource === 'camera') {
       startIntroCountdown();
     } else {
@@ -1645,7 +1585,7 @@ function updateIndicators() {
   $('indMic').classList.toggle('on', cameraStream && cameraStream.getAudioTracks().length > 0);
   $('indMic').textContent = (cameraStream && cameraStream.getAudioTracks().length > 0) ? '🎤 الميكروفون' : '🎤 مكتوم';
   $('indRef').classList.toggle('ref-on', refLoaded);
-  $('indRef').textContent = refLoaded ? '🎞️ المرجعي جاهز' : '🎞️ المرجعي';
+  $('indRef').textContent = refLoaded ? '🎞️ المشاهد جاهز' : '🎞️ المشاهد';
   $('indMusic').classList.toggle('ref-on', musicLoaded);
   $('indMusic').textContent = musicPlaying ? '🎵 يعمل' : (musicLoaded ? '🎵 جاهزة' : '🎵 الموسيقى');
   const prompterReady = prompterEnabled && prompterText.value.trim().length > 0;
@@ -1785,76 +1725,80 @@ function drawThinGoldFrame(W, H, PAD) {
   ctx.fillStyle = shine; ctx.fillRect(0, 0, W, PAD);
 }
 
+// ============================================================
+// 🎙️ وضع التعليق — تصميم نظيف بأسلوب المحللين
+// ============================================================
 function drawCommentaryLayout(W, H, dt) {
   const halfH = H / 2;
-  // النصف العلوي: أنت (مباشر)
-  if (activeSource === 'camera' && camVideo.readyState >= 2) drawCover(camVideo, 0, 0, W, halfH);
-  else if (video.readyState >= 2) drawCover(video, 0, 0, W, halfH);
-  else drawEmptyState(W, halfH, '📷 الكاميرا غير جاهزة');
 
-  // النصف السفلي: الفيديو المشاهد
-  if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, halfH, W, halfH);
-  else drawEmptyState(W, halfH, '🎞️ الفيديو المشاهد غير جاهز');
-
-  // خط فاصل ذهبي
-  const sepGrad = ctx.createLinearGradient(0, halfH - 2, W, halfH + 2);
-  sepGrad.addColorStop(0, '#B8860B'); sepGrad.addColorStop(0.5, '#FFD700'); sepGrad.addColorStop(1, '#B8860B');
-  ctx.fillStyle = sepGrad;
-  ctx.fillRect(0, halfH - 3, W, 6);
-
-  // شارة "أنت - مباشر"
-  const pulse = (Math.sin(Date.now() / 300) + 1) / 2;
-  ctx.save();
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  ctx.beginPath(); ctx.roundRect(20, 20, 180, 40, 8); ctx.fill();
-  ctx.strokeStyle = `rgba(255, 71, 87, ${0.7 + pulse * 0.3})`;
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.roundRect(20, 20, 180, 40, 8); ctx.stroke();
-  ctx.fillStyle = `rgba(255, 71, 87, ${0.5 + pulse * 0.5})`;
-  ctx.beginPath(); ctx.arc(45, 40, 8, 0, Math.PI * 2); ctx.fill();
-  ctx.fillStyle = '#fff';
-  ctx.font = '900 17px Cairo, sans-serif';
-  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-  ctx.fillText('أنت — مباشر', 190, 41);
-  ctx.restore();
-
-  // شارة "الفيديو المشاهد"
-  ctx.save();
-  ctx.fillStyle = 'rgba(156, 39, 176, 0.9)';
-  ctx.beginPath(); ctx.roundRect(20, halfH + 16, 200, 38, 8); ctx.fill();
-  ctx.strokeStyle = '#d8b4ff'; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.roundRect(20, halfH + 16, 200, 38, 8); ctx.stroke();
-  ctx.fillStyle = '#fff';
-  ctx.font = '900 16px Cairo, sans-serif';
-  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-  ctx.fillText('🎞️ الفيديو المشاهد', 210, halfH + 36);
-  ctx.restore();
-
-  // مؤشر الخفض الذكي
-  if (smartDuckingEnabled && isRecording) {
-    const speaking = (Date.now() - lastVoiceTime) < voiceReleaseDelay;
-    if (speaking) {
-      ctx.save();
-      ctx.fillStyle = `rgba(255, 71, 87, ${0.85 + pulse * 0.15})`;
-      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.font = '900 15px Cairo, sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('🎤 صوت الفيديو مخفوض', W - 120, halfH + 36);
-      ctx.restore();
-    } else if (refVideo.readyState >= 2 && !refVideo.paused) {
-      ctx.save();
-      ctx.fillStyle = 'rgba(0, 200, 0, 0.75)';
-      ctx.beginPath(); ctx.roundRect(W - 220, halfH + 16, 200, 38, 8); ctx.fill();
-      ctx.fillStyle = '#fff';
-      ctx.font = '900 15px Cairo, sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('🔊 صوت الفيديو كامل', W - 120, halfH + 36);
-      ctx.restore();
-    }
+  // ─── النصف العلوي: أنا مباشر (الكاميرا) ───
+  if (activeSource === 'camera' && camVideo.readyState >= 2) {
+    drawCover(camVideo, 0, 0, W, halfH);
+  } else if (video.readyState >= 2) {
+    drawCover(video, 0, 0, W, halfH);
+  } else {
+    drawEmptyState(W, halfH, '📷 الكاميرا غير جاهزة');
   }
+
+  // ─── النصف السفلي: الفيديو المشاهد ───
+  if (refLoaded && refVideo.readyState >= 2) {
+    drawCover(refVideo, 0, halfH, W, halfH);
+  } else {
+    drawEmptyState(W, halfH, '🎞️ الفيديو المشاهد غير جاهز');
+  }
+
+  // ─── الفاصل الذهبي الرقيق ───
+  const sepGrad = ctx.createLinearGradient(0, 0, W, 0);
+  sepGrad.addColorStop(0, '#B8860B');
+  sepGrad.addColorStop(0.3, '#FFD700');
+  sepGrad.addColorStop(0.5, '#FFF8DC');
+  sepGrad.addColorStop(0.7, '#FFD700');
+  sepGrad.addColorStop(1, '#B8860B');
+  ctx.fillStyle = sepGrad;
+  ctx.fillRect(0, halfH - 2, W, 4);
+
+  // ─── شارة "أنا مباشر" (يسار علوي) ───
+  const pulse = (Math.sin(Date.now() / 400) + 1) / 2;
+  ctx.save();
+  // ظل النص للوضوح
+  ctx.shadowColor = 'rgba(0,0,0,0.9)';
+  ctx.shadowBlur = 12;
+  ctx.shadowOffsetY = 2;
+  // دائرة حمراء نابضة
+  const dotRadius = 7 + pulse * 2;
+  ctx.fillStyle = '#ff4757';
+  ctx.beginPath();
+  ctx.arc(42, 38, dotRadius, 0, Math.PI * 2);
+  ctx.fill();
+  // هالة
+  ctx.fillStyle = `rgba(255, 71, 87, ${0.25 * (1 - pulse)})`;
+  ctx.beginPath();
+  ctx.arc(42, 38, dotRadius + 8 + pulse * 4, 0, Math.PI * 2);
+  ctx.fill();
+  // نص
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 20px Cairo, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('مباشر', 200, 40);
+  ctx.restore();
+
+  // ─── شارة "الفيديو المشاهد" (يسار سفلي) ───
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.9)';
+  ctx.shadowBlur = 12;
+  ctx.shadowOffsetY = 2;
+  // خط ذهبي صغير
+  ctx.fillStyle = '#FFD700';
+  ctx.fillRect(24, halfH + 30, 6, 22);
+  // نص
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 20px Cairo, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('قيد الاستماع', 205, halfH + 42);
+  ctx.restore();
+
   canvas._pipBounds = null;
 }
 
@@ -1892,7 +1836,7 @@ function redraw(dt) {
       canvas._pipBounds = null;
     } else if (layoutMode === 'reference') {
       if (refLoaded && refVideo.readyState >= 2) drawCover(refVideo, 0, 0, innerW, innerH);
-      else drawEmptyState(innerW, innerH, '🎞️ اضغط «عرض المرجعي»');
+      else drawEmptyState(innerW, innerH, '🎞️ اضغط «عرض المشاهد»');
       if (activeSource === 'camera' && camVideo.readyState >= 2) drawPiP(camVideo, innerW, innerH);
       else if (video.readyState >= 2) drawPiP(video, innerW, innerH);
       else canvas._pipBounds = null;
@@ -1908,7 +1852,7 @@ function redraw(dt) {
       ctx.fillStyle = 'rgba(0,0,0,0.7)'; ctx.fillRect(halfW - 90, 20, 80, 30);
       ctx.fillStyle = '#9c27b0'; ctx.font = '900 16px Cairo, sans-serif';
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('المرجعي', halfW - 50, 35);
+      ctx.fillText('المشاهد', halfW - 50, 35);
       ctx.fillStyle = 'rgba(0,0,0,0.7)'; ctx.fillRect(halfW + 10, 20, 80, 30);
       ctx.fillStyle = '#FFD700'; ctx.fillText('أنت', halfW + 50, 35);
       canvas._pipBounds = null;
@@ -1934,63 +1878,6 @@ document.addEventListener('keydown', e => {
   scheduleStudioHide();
 });
 
-function updateVoiceDetection() {
-  const meter = $('voiceMeter');
-  const vStatus = $('voiceStatus');
-  
-  if (!micAnalyser || !micDataArray) {
-    if (meter) meter.style.width = '0%';
-    if (vStatus) { vStatus.textContent = 'لا يوجد ميكروفون'; vStatus.style.color = '#5a7a9a'; }
-    return;
-  }
-  
-  micAnalyser.getByteTimeDomainData(micDataArray);
-  let sum = 0;
-  for (let i = 0; i < micDataArray.length; i++) {
-    const v = (micDataArray[i] - 128) / 128;
-    sum += v * v;
-  }
-  const rms = Math.sqrt(sum / micDataArray.length);
-  currentVoiceLevel = Math.min(100, rms * 280);
-  
-  const now = Date.now();
-  if (currentVoiceLevel > voiceThreshold) {
-    lastVoiceTime = now;
-  }
-  const speaking = (now - lastVoiceTime) < voiceReleaseDelay;
-  
-  if (refDuckNode && audioCtx) {
-    const inCommentary = (layoutMode === 'commentary');
-    const hasMic = cameraStream && cameraStream.getAudioTracks().length > 0;
-    const shouldDuck = smartDuckingEnabled && isRecording && !isPaused && inCommentary && hasMic;
-    
-    if (shouldDuck) {
-      const target = speaking ? duckLevelWhenSpeaking : 1.0;
-      const tc = speaking ? 0.05 : 0.20;
-      refDuckNode.gain.setTargetAtTime(target, audioCtx.currentTime, tc);
-    } else {
-      refDuckNode.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.15);
-    }
-  }
-  
-  if (meter) meter.style.width = Math.min(100, currentVoiceLevel) + '%';
-  if (vStatus) {
-    if (!cameraStream || !cameraStream.getAudioTracks().length) {
-      vStatus.textContent = 'الميكروفون مكتوم';
-      vStatus.style.color = '#5a7a9a';
-    } else if (speaking) {
-      vStatus.textContent = '🎤 تتحدث الآن';
-      vStatus.style.color = '#00FF00';
-    } else if (currentVoiceLevel > voiceThreshold * 0.6) {
-      vStatus.textContent = 'صوت خفيف';
-      vStatus.style.color = '#ffc107';
-    } else {
-      vStatus.textContent = '🤫 صامت';
-      vStatus.style.color = '#5a7a9a';
-    }
-  }
-}
-
 function renderLoop(ts) {
   const dt = lastFrameTime ? Math.min(0.1, (ts - lastFrameTime) / 1000) : 0.033;
   lastFrameTime = ts;
@@ -2001,7 +1888,6 @@ function renderLoop(ts) {
   const needsAnim = isRecording || isPaused || layoutMode === 'reference' || layoutMode === 'commentary' || transitionProgress > 0 || camLive || videoLive || refLive || hasNews || mainPreviewing || refPreviewing;
   if (needsAnim) redraw(dt);
   animatePrompter(ts);
-  updateVoiceDetection();
   animFrame = requestAnimationFrame(renderLoop);
 }
 
@@ -2047,45 +1933,14 @@ $('refVolSlider').addEventListener('input', e => {
   if (refVolNode && audioCtx) refVolNode.gain.setTargetAtTime(refVolValue, audioCtx.currentTime, 0.05);
 });
 
-// ✨ إعدادات التعليق الذكي
-$('optSmartDuck').addEventListener('change', e => {
-  smartDuckingEnabled = e.target.checked;
-  if (!smartDuckingEnabled && refDuckNode && audioCtx) {
-    refDuckNode.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.15);
-  }
-  applyMix();
-});
-
+// مقدمة صوتية
 $('optIntroEnabled').addEventListener('change', e => {
   introEnabled = e.target.checked;
 });
-
 $('introDuration').addEventListener('input', e => {
   introDuration = parseInt(e.target.value);
   $('introDurationVal').textContent = introDuration + ' ثوان';
 });
-
-$('duckLevel').addEventListener('input', e => {
-  duckLevelWhenSpeaking = parseInt(e.target.value) / 100;
-  $('duckLevelVal').textContent = e.target.value + '%';
-});
-
-$('duckThreshold').addEventListener('input', e => {
-  voiceThreshold = parseInt(e.target.value);
-  $('duckThresholdVal').textContent = voiceThreshold;
-  const line = $('voiceThresholdLine');
-  if (line) line.style.left = Math.min(100, voiceThreshold) + '%';
-});
-
-$('duckRelease').addEventListener('input', e => {
-  voiceReleaseDelay = parseInt(e.target.value);
-  $('duckReleaseVal').textContent = voiceReleaseDelay + 'ms';
-});
-
-setTimeout(() => {
-  const line = $('voiceThresholdLine');
-  if (line) line.style.left = Math.min(100, voiceThreshold) + '%';
-}, 200);
 
 canvas.width = 1280; canvas.height = 720;
 setTimeout(() => {
@@ -2105,7 +1960,7 @@ animFrame = requestAnimationFrame(renderLoop);
 
 console.log('✅ الاستوديو جاهز!');
 console.log('📖 ميزة التلقين مفعّلة.');
-console.log('🎙️ وضع التعليق الذكي مفعّل — زر C للتبديل، مع خفض تلقائي لصوت الفيديو عند كلامك.');
+console.log('🎙️ وضع التعليق — أسلوب المحللين (نصف/نصف). اضغط C للتبديل.');
 </script>
 </body>
 </html>
